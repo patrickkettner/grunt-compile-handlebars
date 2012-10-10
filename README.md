@@ -32,6 +32,7 @@ I had to work with several hundred repeated data structures that never changed. 
 
 ## Release History
 0.0.1 - Dudley
+  Initial commit
 
 ## License
 Copyright (c) 2012 Patrick Kettner
