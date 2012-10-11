@@ -19,7 +19,7 @@ module.exports = function(grunt) {
     grunt.log.write(grunt.helper('compile-handlebars'));
 
     compiledHTML = grunt.helper('compile-handlebars',  this.data);
-    grunt.file.write(this.data.output, compiledHTML)
+    grunt.file.write(this.data.output, compiledHTML);
 
   });
 
@@ -36,18 +36,19 @@ module.exports = function(grunt) {
       var html = '';
 
       if (data.preHTML) {
-        html += grunt.file.read(data.preHTML)
+        html += grunt.file.read(data.preHTML);
       }
 
       html += compiledTemplate(templateData);
 
       if (data.postHTML) {
-        html += grunt.file.read(data.postHTML)
+        html += grunt.file.read(data.postHTML);
       }
 
-      return html
+      return html;
 
-    };
+    }
   });
 
 };
+​
