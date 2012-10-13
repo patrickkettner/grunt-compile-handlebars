@@ -27,6 +27,26 @@ inside of a grunt task. I assume you know what gruntjs is, but if not - gruntjs.
 ### When
 this questions doesn't even make sense
 
+### How
+Inside your grunt.js file:
+
+```javascript
+'compile-handlebars': {
+    development: {
+        template: 'index.handlebars',
+        output: 'dist/index.html',
+        templateData: {
+            foo: 'bar'
+        }
+    },
+    staging: {
+        template: 'index.handlebars',
+        output: 'dist/index.html',
+        templateData: '<json:settings/staging.json>'
+    }
+}
+```
+
 ### Why
 I had to work with several hundred repeated data structures that never changed. Keeping them all in html was silly, but pushing out a template engine for the end user to compile the same information multiple times was even sillier. This allows you to have your templated cake and eat it too.
 

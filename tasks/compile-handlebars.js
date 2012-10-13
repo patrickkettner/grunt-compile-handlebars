@@ -31,7 +31,6 @@ module.exports = function(grunt) {
     if (data) {
       var handlebars = require('handlebars');
       var template = grunt.file.read(data.template);
-      var templateData = eval(grunt.file.read(data.templateData));
       var compiledTemplate = handlebars.compile(template);
       var html = '';
 
@@ -39,7 +38,7 @@ module.exports = function(grunt) {
         html += grunt.file.read(data.preHTML);
       }
 
-      html += compiledTemplate(templateData);
+      html += compiledTemplate(data.templateData);
 
       if (data.postHTML) {
         html += grunt.file.read(data.postHTML);
@@ -51,4 +50,3 @@ module.exports = function(grunt) {
   });
 
 };
-​
