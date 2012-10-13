@@ -33,6 +33,8 @@ Inside your grunt.js file:
 ```javascript
 'compile-handlebars': {
     development: {
+        preHTML: 'src/pre.html',
+        postHTML: 'src/post.html',
         template: 'index.handlebars',
         output: 'dist/index.html',
         templateData: {
@@ -42,7 +44,7 @@ Inside your grunt.js file:
     staging: {
         template: 'index.handlebars',
         output: 'dist/index.html',
-        templateData: '<json:settings/staging.json>'
+        templateData: '<json:src/staging.json>'
     }
 }
 ```
@@ -51,8 +53,8 @@ Inside your grunt.js file:
 I had to work with several hundred repeated data structures that never changed. Keeping them all in html was silly, but pushing out a template engine for the end user to compile the same information multiple times was even sillier. This allows you to have your templated cake and eat it too.
 
 ## Release History
-0.0.1 - Dudley
-  Initial commit
+ * 0.0.2 - Inez changed to grunt's native json parser (thanks to @sebslomski). Updated Readme
+ * 0.0.1 - Dudley Initial commit
 
 ## License
 Copyright (c) 2012 Patrick Kettner
