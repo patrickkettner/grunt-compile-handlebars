@@ -1,0 +1,5 @@
+{
+    "title":"Handlebars Test",
+    "header":"Testing Handlebars Static Render",
+    "body":"This is content on a webpage statically rendered from a JSON file"
+}
