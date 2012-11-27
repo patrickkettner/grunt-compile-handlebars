@@ -1,0 +1,12 @@
+{
+	"hbrfiles":"app/**/*.hbr",
+	"hbrpartials":"app/**/*.hbt",
+	"hbrwatch":[
+		"app/**/hbr-json/*.json",
+		"app/**/*.hbr",
+		"app/**/*.hbt"
+	],
+	"hbrtemplates":"hbr-json/*.json",
+	"srcpath":"app/",
+	"distpath":"dist/"
+}
