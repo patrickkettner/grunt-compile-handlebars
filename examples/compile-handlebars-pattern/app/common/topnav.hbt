@@ -1,5 +1,0 @@
-<nav>
-	{{#each topnav.nav}}
-	    <a href="{{path}}">{{label}}</a>
-	{{/each}}
-</nav>

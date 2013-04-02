@@ -23,12 +23,24 @@ module.exports = function(grunt) {
       },
     },
 
+    clean: {
+      test: ['tmp']
+    },
+
     // Configuration to be run (and then tested).
-    compile_handlebars: {
-      short: ['tmp/sample_short'],
-      long: {
-        src: ['tmp/sample_long'],
+    'compile-handlebars': {
+      dev: {
+        preHTML: 'src/pre-dev.html',
+        postHTML: 'src/post-dev.html',
+        template: 'src/template.handlebars',
+        templateData: grunt.file.readJSON('src/data.json'),
+        output: 'index.html'
       },
+      prod: {
+        template: 'src/template.handlebars',
+        templateData: grunt.file.readJSON('src/data.json'),
+        output: 'dist/index.html'
+      }
     },
 
     // Unit tests.
@@ -41,18 +53,13 @@ module.exports = function(grunt) {
   grunt.loadTasks('tasks');
 
   // These plugins provide necessary tasks.
+  grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-nodeunit');
 
-  // Setup a test helper to create some folders to clean.
-  grunt.registerTask('copy', 'Copy fixtures to a temp location.', function() {
-    grunt.file.copy('test/fixtures/sample_long/long.txt', 'tmp/sample_long/long.txt');
-    grunt.file.copy('test/fixtures/sample_short/short.txt', 'tmp/sample_short/short.txt');
-  });
-
   // Whenever the 'test' task is run, first create some files to be cleaned,
   // then run this plugin's task(s), then test the result.
-  grunt.registerTask('test', ['copy', 'clean', 'nodeunit']);
+  grunt.registerTask('test', ['clean', 'compile-handlebars', 'nodeunit']);
 
   // By default, lint and run all tests.
   grunt.registerTask('default', ['jshint', 'test']);

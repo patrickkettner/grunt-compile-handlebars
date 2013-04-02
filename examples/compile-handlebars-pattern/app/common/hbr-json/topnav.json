@@ -1,8 +1,0 @@
-{
-	"nav":[
-		{"label":"home","path":"index.html"},
-		{"label":"models","path":"models.html"},
-		{"label":"configurator","path":"configurator.html"},
-		{"label":"dealer locator","path":"dealers.html"}
-	]
-}
