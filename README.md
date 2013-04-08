@@ -1,4 +1,4 @@
-# grunt-compile-handlebars
+# grunt-compile-handlebars [![Build Status](https://secure.travis-ci.org/patrickkettner/grunt-compile-handlebars.png?branch=master)](http://travis-ci.org/patrickkettner/grunt-compile-handlebars)
 
 Compiles handlebar templates, outputs static HTML
 
@@ -53,6 +53,7 @@ Inside your grunt.js file:
 I had to work with several hundred repeated data structures that never changed. Keeping them all in html was silly, but pushing out a template engine for the end user to compile the same information multiple times was even sillier. This allows you to have your templated cake and eat it too.
 
 ## Release History
+ * 0.4.0 - Oseary upgraded to grunt 0.4, removed extra tasks, added tests
  * 0.0.2 - Inez changed to grunt's native json parser (thanks to @sebslomski). Updated Readme
  * 0.0.1 - Dudley Initial commit
 

@@ -1,0 +1,183 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/local/Cellar/node/0.10.3/bin/node',
+1 verbose cli   '/usr/local/bin/npm',
+1 verbose cli   'publish' ]
+2 info using npm@1.2.17
+3 info using node@v0.10.3
+4 verbose publish [ '.' ]
+5 verbose read json /private/tmp/foobar/grunt-compile-handlebars/package.json
+6 verbose cache add [ '.', null ]
+7 verbose cache add name=undefined spec="." args=[".",null]
+8 verbose parsed url { protocol: null,
+8 verbose parsed url   slashes: null,
+8 verbose parsed url   auth: null,
+8 verbose parsed url   host: null,
+8 verbose parsed url   port: null,
+8 verbose parsed url   hostname: null,
+8 verbose parsed url   hash: null,
+8 verbose parsed url   search: null,
+8 verbose parsed url   query: null,
+8 verbose parsed url   pathname: '.',
+8 verbose parsed url   path: '.',
+8 verbose parsed url   href: '.' }
+9 silly lockFile 3a52ce78- .
+10 verbose lock . /Users/pdk/.npm/3a52ce78-.lock
+11 verbose read json package.json
+12 verbose tar pack [ '/var/folders/h0/5z033k4s38s7__4jdzp5vt780000gn/T/npm-30349/1365394329496-0.35709448368288577/tmp.tgz',
+12 verbose tar pack   '.' ]
+13 verbose tarball /var/folders/h0/5z033k4s38s7__4jdzp5vt780000gn/T/npm-30349/1365394329496-0.35709448368288577/tmp.tgz
+14 verbose folder .
+15 info prepublish grunt-compile-handlebars@0.4.0
+16 silly lockFile 3a52ce78- .
+17 verbose lock . /Users/pdk/.npm/3a52ce78-.lock
+18 silly lockFile f5fd125e-9496-0-35709448368288577-tmp-tgz /var/folders/h0/5z033k4s38s7__4jdzp5vt780000gn/T/npm-30349/1365394329496-0.35709448368288577/tmp.tgz
+19 verbose lock /var/folders/h0/5z033k4s38s7__4jdzp5vt780000gn/T/npm-30349/1365394329496-0.35709448368288577/tmp.tgz /Users/pdk/.npm/f5fd125e-9496-0-35709448368288577-tmp-tgz.lock
+20 silly lockFile 3a52ce78- .
+21 silly lockFile 3a52ce78- .
+22 silly lockFile f5fd125e-9496-0-35709448368288577-tmp-tgz /var/folders/h0/5z033k4s38s7__4jdzp5vt780000gn/T/npm-30349/1365394329496-0.35709448368288577/tmp.tgz
+23 silly lockFile f5fd125e-9496-0-35709448368288577-tmp-tgz /var/folders/h0/5z033k4s38s7__4jdzp5vt780000gn/T/npm-30349/1365394329496-0.35709448368288577/tmp.tgz
+24 verbose tar unpack /var/folders/h0/5z033k4s38s7__4jdzp5vt780000gn/T/npm-30349/1365394329496-0.35709448368288577/tmp.tgz
+25 silly lockFile 577e0db9-9496-0-35709448368288577-package /var/folders/h0/5z033k4s38s7__4jdzp5vt780000gn/T/npm-30349/1365394329496-0.35709448368288577/package
+26 verbose lock /var/folders/h0/5z033k4s38s7__4jdzp5vt780000gn/T/npm-30349/1365394329496-0.35709448368288577/package /Users/pdk/.npm/577e0db9-9496-0-35709448368288577-package.lock
+27 silly lockFile f5fd125e-9496-0-35709448368288577-tmp-tgz /var/folders/h0/5z033k4s38s7__4jdzp5vt780000gn/T/npm-30349/1365394329496-0.35709448368288577/tmp.tgz
+28 verbose lock /var/folders/h0/5z033k4s38s7__4jdzp5vt780000gn/T/npm-30349/1365394329496-0.35709448368288577/tmp.tgz /Users/pdk/.npm/f5fd125e-9496-0-35709448368288577-tmp-tgz.lock
+29 silly gunzTarPerm modes [ '755', '644' ]
+30 silly gunzTarPerm extractEntry package.json
+31 silly gunzTarPerm extractEntry .npmignore
+32 silly gunzTarPerm extractEntry README.md
+33 silly gunzTarPerm extractEntry Gruntfile.js
+34 silly gunzTarPerm extractEntry .jshintrc
+35 silly gunzTarPerm extractEntry LICENSE-MIT
+36 silly gunzTarPerm extractEntry .travis.yml
+37 silly gunzTarPerm extractEntry bin/grunt-compile-handlebars
+38 silly gunzTarPerm extractEntry test/compile_handlebars_test.js
+39 silly gunzTarPerm extractEntry test/expected/dev.html
+40 silly gunzTarPerm extractEntry test/expected/prod.html
+41 silly gunzTarPerm extractEntry test/fixtures/data.json
+42 silly gunzTarPerm extractEntry test/fixtures/post-dev.html
+43 silly gunzTarPerm extractEntry test/fixtures/pre-dev.html
+44 silly gunzTarPerm extractEntry test/fixtures/template.handlebars
+45 silly gunzTarPerm extractEntry test/index.html
+46 silly gunzTarPerm extractEntry CONTRIBUTORS.md
+47 silly gunzTarPerm extractEntry tasks/compile-handlebars.js
+48 silly gunzTarPerm extractEntry tmp/dev.html
+49 silly gunzTarPerm extractEntry tmp/prod.html
+50 verbose read json /var/folders/h0/5z033k4s38s7__4jdzp5vt780000gn/T/npm-30349/1365394329496-0.35709448368288577/package/package.json
+51 silly lockFile 577e0db9-9496-0-35709448368288577-package /var/folders/h0/5z033k4s38s7__4jdzp5vt780000gn/T/npm-30349/1365394329496-0.35709448368288577/package
+52 silly lockFile 577e0db9-9496-0-35709448368288577-package /var/folders/h0/5z033k4s38s7__4jdzp5vt780000gn/T/npm-30349/1365394329496-0.35709448368288577/package
+53 silly lockFile f5fd125e-9496-0-35709448368288577-tmp-tgz /var/folders/h0/5z033k4s38s7__4jdzp5vt780000gn/T/npm-30349/1365394329496-0.35709448368288577/tmp.tgz
+54 silly lockFile f5fd125e-9496-0-35709448368288577-tmp-tgz /var/folders/h0/5z033k4s38s7__4jdzp5vt780000gn/T/npm-30349/1365394329496-0.35709448368288577/tmp.tgz
+55 verbose from cache /var/folders/h0/5z033k4s38s7__4jdzp5vt780000gn/T/npm-30349/1365394329496-0.35709448368288577/package/package.json
+56 verbose tar pack [ '/Users/pdk/.npm/grunt-compile-handlebars/0.4.0/package.tgz',
+56 verbose tar pack   '/var/folders/h0/5z033k4s38s7__4jdzp5vt780000gn/T/npm-30349/1365394329496-0.35709448368288577/package' ]
+57 verbose tarball /Users/pdk/.npm/grunt-compile-handlebars/0.4.0/package.tgz
+58 verbose folder /var/folders/h0/5z033k4s38s7__4jdzp5vt780000gn/T/npm-30349/1365394329496-0.35709448368288577/package
+59 silly lockFile 577e0db9-9496-0-35709448368288577-package /var/folders/h0/5z033k4s38s7__4jdzp5vt780000gn/T/npm-30349/1365394329496-0.35709448368288577/package
+60 verbose lock /var/folders/h0/5z033k4s38s7__4jdzp5vt780000gn/T/npm-30349/1365394329496-0.35709448368288577/package /Users/pdk/.npm/577e0db9-9496-0-35709448368288577-package.lock
+61 silly lockFile a02615aa-ile-handlebars-0-4-0-package-tgz /Users/pdk/.npm/grunt-compile-handlebars/0.4.0/package.tgz
+62 verbose lock /Users/pdk/.npm/grunt-compile-handlebars/0.4.0/package.tgz /Users/pdk/.npm/a02615aa-ile-handlebars-0-4-0-package-tgz.lock
+63 silly lockFile 577e0db9-9496-0-35709448368288577-package /var/folders/h0/5z033k4s38s7__4jdzp5vt780000gn/T/npm-30349/1365394329496-0.35709448368288577/package
+64 silly lockFile 577e0db9-9496-0-35709448368288577-package /var/folders/h0/5z033k4s38s7__4jdzp5vt780000gn/T/npm-30349/1365394329496-0.35709448368288577/package
+65 silly lockFile a02615aa-ile-handlebars-0-4-0-package-tgz /Users/pdk/.npm/grunt-compile-handlebars/0.4.0/package.tgz
+66 silly lockFile a02615aa-ile-handlebars-0-4-0-package-tgz /Users/pdk/.npm/grunt-compile-handlebars/0.4.0/package.tgz
+67 silly lockFile a33fed54-compile-handlebars-0-4-0-package /Users/pdk/.npm/grunt-compile-handlebars/0.4.0/package
+68 verbose lock /Users/pdk/.npm/grunt-compile-handlebars/0.4.0/package /Users/pdk/.npm/a33fed54-compile-handlebars-0-4-0-package.lock
+69 silly lockFile a33fed54-compile-handlebars-0-4-0-package /Users/pdk/.npm/grunt-compile-handlebars/0.4.0/package
+70 silly lockFile a33fed54-compile-handlebars-0-4-0-package /Users/pdk/.npm/grunt-compile-handlebars/0.4.0/package
+71 verbose tar unpack /Users/pdk/.npm/grunt-compile-handlebars/0.4.0/package.tgz
+72 silly lockFile a33fed54-compile-handlebars-0-4-0-package /Users/pdk/.npm/grunt-compile-handlebars/0.4.0/package
+73 verbose lock /Users/pdk/.npm/grunt-compile-handlebars/0.4.0/package /Users/pdk/.npm/a33fed54-compile-handlebars-0-4-0-package.lock
+74 silly lockFile a02615aa-ile-handlebars-0-4-0-package-tgz /Users/pdk/.npm/grunt-compile-handlebars/0.4.0/package.tgz
+75 verbose lock /Users/pdk/.npm/grunt-compile-handlebars/0.4.0/package.tgz /Users/pdk/.npm/a02615aa-ile-handlebars-0-4-0-package-tgz.lock
+76 silly gunzTarPerm modes [ '755', '644' ]
+77 silly gunzTarPerm extractEntry package.json
+78 silly gunzTarPerm extractEntry .npmignore
+79 silly gunzTarPerm extractEntry README.md
+80 silly gunzTarPerm extractEntry Gruntfile.js
+81 silly gunzTarPerm extractEntry .jshintrc
+82 silly gunzTarPerm extractEntry LICENSE-MIT
+83 silly gunzTarPerm extractEntry .travis.yml
+84 silly gunzTarPerm extractEntry bin/grunt-compile-handlebars
+85 silly gunzTarPerm extractEntry CONTRIBUTORS.md
+86 silly gunzTarPerm extractEntry tasks/compile-handlebars.js
+87 silly gunzTarPerm extractEntry test/compile_handlebars_test.js
+88 silly gunzTarPerm extractEntry test/expected/dev.html
+89 silly gunzTarPerm extractEntry test/expected/prod.html
+90 silly gunzTarPerm extractEntry test/fixtures/data.json
+91 silly gunzTarPerm extractEntry test/fixtures/post-dev.html
+92 silly gunzTarPerm extractEntry test/fixtures/pre-dev.html
+93 silly gunzTarPerm extractEntry test/fixtures/template.handlebars
+94 silly gunzTarPerm extractEntry test/index.html
+95 silly gunzTarPerm extractEntry tmp/dev.html
+96 silly gunzTarPerm extractEntry tmp/prod.html
+97 verbose read json /Users/pdk/.npm/grunt-compile-handlebars/0.4.0/package/package.json
+98 silly lockFile a33fed54-compile-handlebars-0-4-0-package /Users/pdk/.npm/grunt-compile-handlebars/0.4.0/package
+99 silly lockFile a33fed54-compile-handlebars-0-4-0-package /Users/pdk/.npm/grunt-compile-handlebars/0.4.0/package
+100 silly lockFile a02615aa-ile-handlebars-0-4-0-package-tgz /Users/pdk/.npm/grunt-compile-handlebars/0.4.0/package.tgz
+101 silly lockFile a02615aa-ile-handlebars-0-4-0-package-tgz /Users/pdk/.npm/grunt-compile-handlebars/0.4.0/package.tgz
+102 silly shasum updated bytes 3983
+103 info shasum 1c80ea16de161a463674d22d981652f0728128f7
+103 info shasum /Users/pdk/.npm/grunt-compile-handlebars/0.4.0/package.tgz
+104 verbose from cache /Users/pdk/.npm/grunt-compile-handlebars/0.4.0/package/package.json
+105 verbose chmod /Users/pdk/.npm/grunt-compile-handlebars/0.4.0/package.tgz 644
+106 verbose chown /Users/pdk/.npm/grunt-compile-handlebars/0.4.0/package.tgz [ 501, 20 ]
+107 silly lockFile 3a52ce78- .
+108 silly publish { name: 'grunt-compile-handlebars',
+108 silly publish   description: 'Compile handlebar templates, outputting static HTML',
+108 silly publish   version: '0.4.0',
+108 silly publish   homepage: 'https://github.com/patrickkettner/grunt-compile-handlebars',
+108 silly publish   author:
+108 silly publish    { name: 'Patrick Kettner',
+108 silly publish      email: 'patrick@patrickkettner.com',
+108 silly publish      url: 'https://github.com/patrickkettner' },
+108 silly publish   repository:
+108 silly publish    { type: 'git',
+108 silly publish      url: 'git://github.com/patrickkettner/grunt-compile-handlebars.git' },
+108 silly publish   bugs: { url: 'https://github.com/patrickkettner/grunt-compile-handlebars/issues' },
+108 silly publish   licenses:
+108 silly publish    [ { type: 'MIT',
+108 silly publish        url: 'https://github.com/patrickkettner/grunt-compile-handlebars/blob/master/LICENSE-MIT' } ],
+108 silly publish   main: 'grunt.js',
+108 silly publish   bin: { 'grunt-compile-handlebars': 'bin/grunt-compile-handlebars' },
+108 silly publish   engines: { node: '*>= 0.8.0' },
+108 silly publish   scripts: { test: 'grunt test' },
+108 silly publish   devDependencies:
+108 silly publish    { 'grunt-contrib-jshint': '~0.2.0',
+108 silly publish      'grunt-contrib-clean': '~0.4.0',
+108 silly publish      'grunt-contrib-nodeunit': '~0.1.2',
+108 silly publish      grunt: '~0.4.0' },
+108 silly publish   peerDependencies: { grunt: '~0.4.0' },
+108 silly publish   dependencies: { handlebars: '>= 1' },
+108 silly publish   keywords: [ 'gruntplugin', 'handlebars' ],
+108 silly publish   readme: '# grunt-compile-handlebars [![Build Status](https://secure.travis-ci.org/patrickkettner/grunt-compile-handlebars.png?branch=master)](http://travis-ci.org/patrickkettner/grunt-compile-handlebars)\n\nCompiles handlebar templates, outputs static HTML\n\n## Getting Started\nInstall this grunt plugin next to your project\'s [grunt.js gruntfile][getting_started] with: `npm install grunt-compile-handlebars`\n\nThen add this line to your project\'s `grunt.js` gruntfile:\n\n```javascript\ngrunt.loadNpmTasks(\'grunt-compile-handlebars\');\n```\n\n[grunt]: https://github.com/gruntjs/grunt\n[getting_started]: https://github.com/gruntjs/grunt/blob/master/docs/getting_started.md\n\n## Documentation\n### Who\npatrick kettner - a web developer who consistently worked with large static data sets.\n\n### What\ngrunt-compile-handlebars takes in a handlebars tempalte (and optionally static pre and post html), runs a dataset over it, and outputs static html.\n\n### Where\ninside of a grunt task. I assume you know what gruntjs is, but if not - gruntjs.com\n\n### When\nthis questions doesn\'t even make sense\n\n### How\nInside your grunt.js file:\n\n```javascript\n\'compile-handlebars\': {\n    development: {\n        preHTML: \'src/pre.html\',\n        postHTML: \'src/post.html\',\n        template: \'index.handlebars\',\n        output: \'dist/index.html\',\n        templateData: {\n            foo: \'bar\'\n        }\n    },\n    staging: {\n        template: \'index.handlebars\',\n        output: \'dist/index.html\',\n        templateData: \'<json:src/staging.json>\'\n    }\n}\n```\n\n### Why\nI had to work with several hundred repeated data structures that never changed. Keeping them all in html was silly, but pushing out a template engine for the end user to compile the same information multiple times was even sillier. This allows you to have your templated cake and eat it too.\n\n## Release History\n * 0.4.0 - Oseary upgraded to grunt 0.4, removed extra tasks, added tests\n * 0.0.2 - Inez changed to grunt\'s native json parser (thanks to @sebslomski). Updated Readme\n * 0.0.1 - Dudley Initial commit\n\n## License\nCopyright (c) 2013 Patrick Kettner\nLicensed under the MIT license.\n',
+108 silly publish   readmeFilename: 'README.md',
+108 silly publish   _id: 'grunt-compile-handlebars@0.4.0',
+108 silly publish   dist: { shasum: '1c80ea16de161a463674d22d981652f0728128f7' },
+108 silly publish   _from: '.' }
+109 verbose url raw grunt-compile-handlebars
+110 verbose url resolving [ 'https://registry.npmjs.org/', './grunt-compile-handlebars' ]
+111 verbose url resolved https://registry.npmjs.org/grunt-compile-handlebars
+112 info trying registry request attempt 1 at 00:12:20
+113 http PUT https://registry.npmjs.org/grunt-compile-handlebars
+114 http 409 https://registry.npmjs.org/grunt-compile-handlebars
+115 verbose url raw grunt-compile-handlebars
+116 verbose url resolving [ 'https://registry.npmjs.org/', './grunt-compile-handlebars' ]
+117 verbose url resolved https://registry.npmjs.org/grunt-compile-handlebars
+118 info trying registry request attempt 1 at 00:12:21
+119 http GET https://registry.npmjs.org/grunt-compile-handlebars
+120 http 200 https://registry.npmjs.org/grunt-compile-handlebars
+121 error publish fail Cannot publish over existing version.
+121 error publish fail Update the 'version' field in package.json and try again.
+121 error publish fail
+121 error publish fail If the previous version was published in error, see:
+121 error publish fail     npm help unpublish
+121 error publish fail
+121 error publish fail To automatically increment version numbers, see:
+121 error publish fail     npm help version
+122 error System Darwin 12.3.0
+123 error command "/usr/local/Cellar/node/0.10.3/bin/node" "/usr/local/bin/npm" "publish"
+124 error cwd /private/tmp/foobar/grunt-compile-handlebars
+125 error node -v v0.10.3
+126 error npm -v 1.2.17
+127 error code EPUBLISHCONFLICT
+128 verbose exit [ 1, true ]
