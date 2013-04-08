@@ -11,32 +11,19 @@
 module.exports = function(grunt) {
   var handlebars = require('handlebars');
 
-  function compileHandlebars(config) {
-    if (config) {
-      var template = grunt.file.read(config.template);
-      var compiledTemplate = handlebars.compile(template);
-      var html = '';
-
-      if (config.preHTML) html += grunt.file.read(config.preHTML);
-
-      html += compiledTemplate(config.template);
-
-      if (config.postHTML) html += grunt.file.read(config.postHTML);
-
-      return html;
-
-    }
-  }
-
-
-  // ==========================================================================
-  // TASKS
-  // ==========================================================================
-
   grunt.registerMultiTask('compile-handlebars', 'Compile Handlebars templates ', function() {
-    var compiledHTML = compileHandlebars(this.data);
 
-    grunt.log.write(grunt.helper('compile-handlebars'));
-    grunt.file.write(this.data.output, compiledHTML);
+    var config = this.data;
+    var template = grunt.file.read(config.template);
+    var compiledTemplate = handlebars.compile(template);
+    var html = '';
+
+    if (config.preHTML) html += grunt.file.read(config.preHTML);
+
+    html += compiledTemplate(config.templateData);
+
+    if (config.postHTML) html += grunt.file.read(config.postHTML);
+
+    grunt.file.write(this.data.output, html);
   });
 };

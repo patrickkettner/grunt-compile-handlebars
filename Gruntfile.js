@@ -30,16 +30,20 @@ module.exports = function(grunt) {
     // Configuration to be run (and then tested).
     'compile-handlebars': {
       dev: {
-        preHTML: 'src/pre-dev.html',
-        postHTML: 'src/post-dev.html',
-        template: 'src/template.handlebars',
-        templateData: grunt.file.readJSON('src/data.json'),
-        output: 'index.html'
+        preHTML: 'test/fixtures/pre-dev.html',
+        postHTML: 'test/fixtures/post-dev.html',
+        template: 'test/fixtures/template.handlebars',
+        templateData: {
+          "salutation": "Hallo",
+          "punctuation": ",",
+          "location": "Welt"
+        },
+        output: 'tmp/dev.html'
       },
       prod: {
-        template: 'src/template.handlebars',
-        templateData: grunt.file.readJSON('src/data.json'),
-        output: 'dist/index.html'
+        template: 'test/fixtures/template.handlebars',
+        templateData: grunt.file.readJSON('test/fixtures/data.json'),
+        output: 'tmp/prod.html'
       }
     },
 
