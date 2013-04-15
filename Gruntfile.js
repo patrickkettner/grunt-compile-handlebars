@@ -40,9 +40,16 @@ module.exports = function(grunt) {
         },
         output: 'tmp/dev.html'
       },
+      local: {
+        preHTML: 'test/fixtures/pre-dev.html',
+        postHTML: 'test/fixtures/post-dev.html',
+        template: 'test/fixtures/deep/**/*.handlebars',
+        templateData: 'test/fixtures/deep/**/*.json',
+        output: 'tmp/deep/**/*.html'
+      },
       prod: {
         template: 'test/fixtures/template.handlebars',
-        templateData: grunt.file.readJSON('test/fixtures/data.json'),
+        templateData: 'test/fixtures/data.json',
         output: 'tmp/prod.html'
       }
     },
