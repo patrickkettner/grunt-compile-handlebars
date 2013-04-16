@@ -29,28 +29,43 @@ module.exports = function(grunt) {
 
     // Configuration to be run (and then tested).
     'compile-handlebars': {
-      dev: {
+      allStatic: {
         preHTML: 'test/fixtures/pre-dev.html',
         postHTML: 'test/fixtures/post-dev.html',
+        template: 'test/fixtures/template.handlebars',
+        templateData: 'test/fixtures/data.json',
+        output: 'tmp/allStatic.html'
+      },
+      dynamicTemplate: {
+        template: '<h1>{{salutation}}{{punctuation}} {{location}}</h1>',
+        templateData: 'test/fixtures/data.json',
+        output: 'tmp/dynamicTemplate.html'
+      },
+      dynamicTemplateData: {
         template: 'test/fixtures/template.handlebars',
         templateData: {
           "salutation": "Hallo",
           "punctuation": ",",
           "location": "Welt"
         },
-        output: 'tmp/dev.html'
+        output: 'tmp/dynamicTemplateData.html'
       },
-      local: {
-        preHTML: 'test/fixtures/pre-dev.html',
-        postHTML: 'test/fixtures/post-dev.html',
+      dynamicPre: {
+        preHTML: '<header>INLINE HEADER</header>',
+        template: 'test/fixtures/template.handlebars',
+        templateData: 'test/fixtures/data.json',
+        output: 'tmp/dynamicPre.html'
+      },
+      dynamicPost: {
+        postHTML: '<footer>INLINE HEADER</footer>',
+        template: 'test/fixtures/template.handlebars',
+        templateData: 'test/fixtures/data.json',
+        output: 'tmp/dynamicPost.html'
+      },
+      globbedTemplateAndOutput: {
         template: 'test/fixtures/deep/**/*.handlebars',
         templateData: 'test/fixtures/deep/**/*.json',
         output: 'tmp/deep/**/*.html'
-      },
-      prod: {
-        template: 'test/fixtures/template.handlebars',
-        templateData: 'test/fixtures/data.json',
-        output: 'tmp/prod.html'
       }
     },
 

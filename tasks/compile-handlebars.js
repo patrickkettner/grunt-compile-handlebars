@@ -2,7 +2,7 @@
 * grunt-compile-handlebars
 * https://github.com/patrickkettner/grunt-compile-handlebars
 *
-* Copyright (c) 2012 Patrick Kettner, contributors
+* Copyright (c) 2013 Patrick Kettner, contributors
 * Licensed under the MIT license.
 */
 
@@ -10,94 +10,100 @@
 
 module.exports = function(grunt) {
   var handlebars = require('handlebars');
-  var getData = function(config) {
-    var data;
-    if (typeof(config) === 'object') {
-      data = Array.isArray(config) ? config : [config];
+
+  /* Normalizes the input so that
+   * it is always an array for the
+   * forEach loop                */
+  var getConfig = function(config) {
+    if (grunt.util.kindOf(config) === 'array') {
+      return config;
+    }
+    if (grunt.file.expand(config).length) {
+      return grunt.file.expand(config);
     }
     else {
-      data = grunt.file.expand(config);
+      return [config];
     }
+  };
+
+  /* Guesses the file extension based on
+   * the string after the last dot of the
+   * of the filepath                  */
+  var filetype = function(filepath) {
+    var extension = filepath.split('/').pop().split('.');
+    extension.shift();
+    extension = extension.join('.');
+    if (extension) extension = '.' + extension;
+    return extension;
+  };
+
+  /* Gets the final representation of the
+   * input, wether it be object, or string */
+  var parseData = function(data) {
+    /* grunt.file chokes on objects, so we
+    * check for it immiedietly */
+    if (grunt.util.kindOf(data) === 'object') return data;
+
+    /* data isn't an object, so its probably
+    * a file. */
+    try {
+      data = grunt.file.read(data);
+      data = JSON.parse(data);
+    }
+    catch (e) {}
     return data;
   };
 
-  var unglobbedName = function(wildcard, file, relative) {
-    var path = file.split('/');
-    var result = file;
-    var filename;
+  /* Checks if the input is a glob
+   * and if so, returns the unglobbed
+   * version of the filename       */
+  var isGlob = function(filename) {
+    var match = filename.match(/[^\*]*/);
+    if (match[0] !== filename) return match.pop();
+  };
 
-    //get the shared parent path
-    while (wildcard.localeCompare(result) < 0) {
-      path.pop();
-      result = path.join('/');
-    }
-
-
-    filename = file.slice(result.length, file.length).split('.');
-    filename.pop();
-    if (relative) {
-      return result.split('/').pop() + filename.join('.');
+  /* Figures out the name of the file before
+   * any globs are used, so the globbed outputs
+   * can be generated                        */
+  var getBasename = function(filename, template) {
+    var glob = isGlob(template);
+    var basename;
+    if (glob) {
+      basename = filename.slice(glob.length, filename.length).split('.');
+      basename.pop();
     }
     else {
-      return result += filename.join('.');
+      basename = filename.split('/').pop().split('.');
+      basename.pop();
     }
-
+    return basename.toString();
   };
 
-  var filetype = function(filepath) {
-    var ext = filepath.split('/').pop().split('.');
-    ext.shift();
-    ext = ext.join('.');
-    if (ext) ext = '.' + ext;
-    return ext;
-  };
-
-  var readFile = function(file) {
-    var content = grunt.file.read(file);
-    try {
-      content = JSON.parse(content);
-    }
-    catch (e) {}
-    return content;
-  };
-
-  var fileOrGlob = function(path, template, read) {
-    if (!grunt.file.expand(path).length) {
-      //grunt.file.exists chokes on objects, so we have
-      //to do this ugly check instead
-      if (typeof(path) !== 'object' && grunt.file.isDir(unglobbedName(path, template))) {
-        path = unglobbedName(path, template) + filetype(path);
-        return read ? readFile(path) : path;
-      }
-
-      //path is not an actual file, but something non path-like
-      //like a JSON object or raw HTML, so we just return it
-      return path;
-    }
-    else if (grunt.file.exists(path)) {
-      return read ? readFile(path) : path;
-    }
-    else {
-      return path;
-    }
+  var getName = function(filename, basename) {
+    if (grunt.util.kindOf(filename) === 'object') return filename;
+    if (grunt.file.exists(filename)) return filename;
+    if (isGlob(filename)) return isGlob(filename) + basename + filetype(filename);
+    return filename;
   };
 
   grunt.registerMultiTask('compile-handlebars', 'Compile Handlebars templates ', function() {
     var config = this.data;
-    var templates = getData(config.template);
+    var templates = getConfig(config.template);
     var templateData = config.templateData;
 
+
     templates.forEach(function(template) {
-      var compiledTemplate = handlebars.compile(readFile(template));
+      var compiledTemplate = handlebars.compile(parseData(template));
+      var basename = getBasename(template, config.template);
       var html = '';
 
-      if (config.preHTML) html += fileOrGlob(config.preHTML, template, true);
+      if (config.preHTML) html += parseData(getName(config.preHTML, basename));
 
-      html += compiledTemplate(fileOrGlob(templateData, template, true));
+      html += compiledTemplate(parseData(getName(templateData, basename)));
 
-      if (config.postHTML) html += fileOrGlob(config.postHTML, template, true);
+      if (config.postHTML) html += parseData(getName(config.postHTML, basename));
 
-      grunt.file.write(fileOrGlob(config.output, template), html);
+      grunt.file.write(getName(config.output, basename), html);
     });
 
   });
