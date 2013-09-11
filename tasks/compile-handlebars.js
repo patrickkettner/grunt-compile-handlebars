@@ -52,9 +52,7 @@ module.exports = function(grunt) {
       data = grunt.file.read(data);
       data = JSON.parse(data);
     }
-    catch (e) {
-      data = {};
-    }
+    catch (e) {}
     return data;
   };
 
@@ -119,7 +117,7 @@ module.exports = function(grunt) {
       if (config.preHTML) {
         html += parseData(getName(config.preHTML, basename));
       }
-
+      console.log("====", parseData(getName(templateData, basename)));
       html += compiledTemplate(parseData(getName(templateData, basename)));
 
       if (config.postHTML) {
