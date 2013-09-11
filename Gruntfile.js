@@ -65,8 +65,7 @@ module.exports = function(grunt) {
       globbedTemplateAndOutput: {
         template: 'test/fixtures/deep/**/*.handlebars',
         templateData: 'test/fixtures/deep/**/*.json',
-        output: 'tmp/deep/**/*.html',
-        partial: 'test/fixtures/deep/shared/**/*.handlebars'
+        output: 'tmp/deep/**/*.html'
       }
     },
 
