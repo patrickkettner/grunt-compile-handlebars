@@ -52,7 +52,9 @@ module.exports = function(grunt) {
       data = grunt.file.read(data);
       data = JSON.parse(data);
     }
-    catch (e) {}
+    catch (e) {
+      data = {};
+    }
     return data;
   };
 
