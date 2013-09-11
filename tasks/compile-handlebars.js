@@ -100,6 +100,12 @@ module.exports = function(grunt) {
     var config = this.data;
     var templates = getConfig(config.template);
     var templateData = config.templateData;
+    var helpers = config.helper ? getConfig(config.helper): [];
+    
+    helpers.forEach(function (helper) {
+      var basename = getBasename(helper, config.helper);
+      handlebars.registerHelper(basename, require(require("path").resolve(helper)));
+    });
 
     templates.forEach(function(template) {
       var compiledTemplate = handlebars.compile(parseData(template));
