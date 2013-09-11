@@ -88,14 +88,16 @@ module.exports = function(grunt) {
 
   grunt.registerMultiTask('compile-handlebars', 'Compile Handlebars templates ', function() {
     var config = this.data;
+    console.log(config);
     var templates = getConfig(config.template);
     var templateData = config.templateData;
-
 
     templates.forEach(function(template) {
       var compiledTemplate = handlebars.compile(parseData(template));
       var basename = getBasename(template, config.template);
       var html = '';
+
+      handlebars.registerPartial(basename, parseData(template));
 
       if (config.preHTML) html += parseData(getName(config.preHTML, basename));
 
