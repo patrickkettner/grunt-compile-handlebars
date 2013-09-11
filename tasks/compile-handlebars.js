@@ -21,9 +21,7 @@ module.exports = function(grunt) {
     if (grunt.file.expand(config).length) {
       return grunt.file.expand(config);
     }
-    else {
-      return [config];
-    }
+    return [config];
   };
 
   /* Guesses the file extension based on
@@ -33,7 +31,9 @@ module.exports = function(grunt) {
     var extension = filepath.split('/').pop().split('.');
     extension.shift();
     extension = extension.join('.');
-    if (extension) extension = '.' + extension;
+    if (extension) {
+      extension = '.' + extension;
+    }
     return extension;
   };
 
@@ -42,7 +42,9 @@ module.exports = function(grunt) {
   var parseData = function(data) {
     /* grunt.file chokes on objects, so we
     * check for it immiedietly */
-    if (grunt.util.kindOf(data) === 'object') return data;
+    if (grunt.util.kindOf(data) === 'object') {
+      return data;
+    }
 
     /* data isn't an object, so its probably
     * a file. */
@@ -59,7 +61,9 @@ module.exports = function(grunt) {
    * version of the filename       */
   var isGlob = function(filename) {
     var match = filename.match(/[^\*]*/);
-    if (match[0] !== filename) return match.pop();
+    if (match[0] !== filename) {
+      return match.pop();
+    }
   };
 
   /* Figures out the name of the file before
@@ -80,15 +84,20 @@ module.exports = function(grunt) {
   };
 
   var getName = function(filename, basename) {
-    if (grunt.util.kindOf(filename) === 'object') return filename;
-    if (grunt.file.exists(filename)) return filename;
-    if (isGlob(filename)) return isGlob(filename) + basename + filetype(filename);
+    if (grunt.util.kindOf(filename) === 'object') {
+      return filename;
+    }
+    if (grunt.file.exists(filename)) {
+      return filename;
+    }
+    if (isGlob(filename)) {
+      return isGlob(filename) + basename + filetype(filename);
+    }
     return filename;
   };
 
   grunt.registerMultiTask('compile-handlebars', 'Compile Handlebars templates ', function() {
     var config = this.data;
-    console.log(config);
     var templates = getConfig(config.template);
     var templateData = config.templateData;
 
@@ -99,11 +108,15 @@ module.exports = function(grunt) {
 
       handlebars.registerPartial(basename, parseData(template));
 
-      if (config.preHTML) html += parseData(getName(config.preHTML, basename));
+      if (config.preHTML) {
+        html += parseData(getName(config.preHTML, basename));
+      }
 
       html += compiledTemplate(parseData(getName(templateData, basename)));
 
-      if (config.postHTML) html += parseData(getName(config.postHTML, basename));
+      if (config.postHTML) {
+        html += parseData(getName(config.postHTML, basename));
+      }
 
       grunt.file.write(getName(config.output, basename), html);
     });
