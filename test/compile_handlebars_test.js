@@ -66,5 +66,17 @@ exports.clean = {
     test.equal(deepActual, deepExpected, 'Deeply globbed files should generated equally named output files');
 
     test.done();
+  },
+  
+  helperAndPartial: function (test) {
+    test.expect(1);
+    
+    var actual = grunt.file.read('tmp/deep/helperAndPartial.html');
+    var expected = grunt.file.read('test/expected/helperAndPartial.html');
+    
+    test.equal(actual, expected, 'Helpers and partials should be corrected renderred');
+    
+    test.done();
   }
+  
 };

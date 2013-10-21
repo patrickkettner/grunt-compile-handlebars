@@ -97,14 +97,21 @@ module.exports = function(grunt) {
   };
 
   grunt.registerMultiTask('compile-handlebars', 'Compile Handlebars templates ', function() {
+    var path = require('path');
     var config = this.data;
     var templates = getConfig(config.template);
     var templateData = config.templateData;
-    var helpers = config.helper ? getConfig(config.helper): [];
+    var helpers = config.helpers ? getConfig(config.helpers): [];
+    var partials = config.partials ? getConfig(config.partials) : [];
     
     helpers.forEach(function (helper) {
-      var basename = getBasename(helper, config.helper);
-      handlebars.registerHelper(basename, require(require("path").resolve(helper)));
+      var basename = getBasename(helper, config.helpers);
+      handlebars.registerHelper(basename, require(path.resolve(helper)));
+    });
+    
+    partials.forEach(function (partial) {
+      var basename = getBasename(partial, config.partials);
+      handlebars.registerPartial(basename, require(path.resolve(partial)));
     });
 
     templates.forEach(function(template) {
@@ -112,13 +119,10 @@ module.exports = function(grunt) {
       var basename = getBasename(template, config.template);
       var html = '';
 
-      handlebars.registerPartial(basename, parseData(template));
-
       if (config.preHTML) {
         html += parseData(getName(config.preHTML, basename));
       }
       html += compiledTemplate(parseData(getName(templateData, basename)));
-
       if (config.postHTML) {
         html += parseData(getName(config.postHTML, basename));
       }
