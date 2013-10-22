@@ -79,6 +79,7 @@ Heres a few of the ways you can use it
 I had to work with several hundred repeated data structures that never changed. Keeping them all in html was silly, but pushing out a template engine for the end user to compile the same information multiple times was even sillier. This allows you to have your templated cake and eat it too.
 
 ## Release History
+ * 0.6.1 - Grace  - @robinqu added support for handlebars partials
  * 0.6.0 - Future Man - added globbing, lots more test
  * 0.4.0 - Oseary - upgraded to grunt 0.4, removed extra tasks, added tests
  * 0.0.2 - Inez - changed to grunt's native json parser (thanks to @sebslomski). Updated Readme
