@@ -156,8 +156,6 @@ module.exports = function(grunt) {
         html += parseData(getName(config.postHTML, basename));
       }
 
-      if (basename.indexOf('_') === 0) return; // don't convert partials!
-
       grunt.file.write(getName(config.output, basename), html);
     });
 
