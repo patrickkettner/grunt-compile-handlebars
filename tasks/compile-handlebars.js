@@ -96,6 +96,26 @@ module.exports = function(grunt) {
     return filename;
   };
 
+  var mergeJson = function(source, globals) {
+      var json, fragment;
+
+      globals.forEach(function (globals) {
+          if (!grunt.file.exists(globals))
+              grunt.log.error("JSON file " + globals + " not found.");
+          else {
+              try { fragment = grunt.file.readJSON(globals); }
+              catch (e) { grunt.fail.warn(e); }
+
+              if (typeof(source) !== 'object') { 
+                  source = fragment;
+              } 
+
+              json = grunt.util._.extend(source, fragment);
+          }
+      });
+      return json;
+  };
+
   grunt.registerMultiTask('compile-handlebars', 'Compile Handlebars templates ', function() {
     var path = require('path');
     var config = this.data;
@@ -103,26 +123,35 @@ module.exports = function(grunt) {
     var templateData = config.templateData;
     var helpers = config.helpers ? getConfig(config.helpers): [];
     var partials = config.partials ? getConfig(config.partials) : [];
+    var basename, compiledTemplate, html, json;
     
     helpers.forEach(function (helper) {
-      var basename = getBasename(helper, config.helpers);
+      basename = getBasename(helper, config.helpers);
       handlebars.registerHelper(basename, require(path.resolve(helper)));
     });
-    
+
     partials.forEach(function (partial) {
-      var basename = getBasename(partial, config.partials);
+      basename = getBasename(partial, config.partials);
       handlebars.registerPartial(basename, require(path.resolve(partial)));
     });
 
     templates.forEach(function(template) {
-      var compiledTemplate = handlebars.compile(parseData(template));
-      var basename = getBasename(template, config.template);
-      var html = '';
+      compiledTemplate = handlebars.compile(parseData(template));
+      basename = getBasename(template, config.template);
+      html = '';
 
       if (config.preHTML) {
         html += parseData(getName(config.preHTML, basename));
       }
-      html += compiledTemplate(parseData(getName(templateData, basename)));
+
+      if (config.globals) {
+        json = mergeJson(parseData(getName(templateData, basename)), config.globals);
+      } else {
+        json = parseData(getName(templateData, basename));
+      }
+
+      html += compiledTemplate(json);
+
       if (config.postHTML) {
         html += parseData(getName(config.postHTML, basename));
       }
