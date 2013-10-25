@@ -77,6 +77,17 @@ exports.clean = {
     test.equal(actual, expected, 'Helpers and partials should be corrected renderred');
     
     test.done();
+  },
+
+  globalJsonGlobbedTemplate: function (test) {
+    test.expect(1);
+  
+    var actual = grunt.file.read('tmp/deep/globalJsonGlobbedTemplate.html');
+    var expected = grunt.file.read('test/expected/globalJsonGlobbedTemplate.html');
+  
+    test.equal(actual, expected, 'Use specific templateName.json per templateName.handlebars (as in globbedTemplateAndOutput) plus multiple global json on top');
+  
+    test.done();
   }
   
 };

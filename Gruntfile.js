@@ -68,6 +68,17 @@ module.exports = function(grunt) {
         output: 'tmp/deep/**/*.html',
         helpers: 'test/helpers/**/*.js',
         partials: 'test/fixtures/deep/shared/**/*.handlebars'
+      },
+      globalJsonGlobbedTemplate: {
+        template: 'test/fixtures/deep/**/*.handlebars',
+        templateData: 'test/fixtures/deep/**/*.json',
+        output: 'tmp/deep/**/*.html',
+        helpers: 'test/helpers/**/*.js',
+        partials: 'test/fixtures/deep/shared/**/*.handlebars',
+        globals: [
+          'test/globals/info.json',
+          'test/globals/textspec.json'
+        ]
       }
     },
 
