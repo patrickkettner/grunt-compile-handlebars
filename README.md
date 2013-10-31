@@ -71,7 +71,18 @@ Heres a few of the ways you can use it
       template: 'test/fixtures/deep/**/*.handlebars',
       templateData: 'test/fixtures/deep/**/*.json',
       output: 'tmp/deep/**/*.html'
-    }
+    },
+    globalJsonGlobbedTemplate: {
+      template: 'test/fixtures/deep/**/*.handlebars',
+      templateData: 'test/fixtures/deep/**/*.json',
+      output: 'tmp/deep/**/*.html',
+      helpers: 'test/helpers/**/*.js',
+      partials: 'test/fixtures/deep/shared/**/*.handlebars',
+      globals: [
+        'test/globals/info.json',
+        'test/globals/textspec.json'
+      ]
+    } 
 }
 ```
 
