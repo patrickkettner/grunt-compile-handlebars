@@ -125,6 +125,7 @@ module.exports = function(grunt) {
     var templateData = config.templateData;
     var helpers = config.helpers ? getConfig(config.helpers): [];
     var partials = config.partials ? getConfig(config.partials) : [];
+    var done = this.async();
     
     helpers.forEach(function (helper) {
       var basename = getBasename(helper, config.helpers);
@@ -160,6 +161,8 @@ module.exports = function(grunt) {
 
       grunt.file.write(getName(config.output, basename), html);
     });
+
+    setImmediate(done);
 
   });
 };
