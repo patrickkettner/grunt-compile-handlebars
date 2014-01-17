@@ -162,7 +162,7 @@ module.exports = function(grunt) {
       grunt.file.write(getName(config.output, basename), html);
     });
 
-    setImmediate(done);
+    process.nextTick(done);
 
   });
 };
