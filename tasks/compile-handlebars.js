@@ -109,9 +109,9 @@ module.exports = function(grunt) {
         catch (e) {
           grunt.fail.warn(e);
         }
-        if (typeof(source) !== 'object') { 
+        if (typeof(source) !== 'object') {
           source = fragment;
-        } 
+        }
         json = grunt.util._.extend(source, fragment);
       }
     });
@@ -125,7 +125,8 @@ module.exports = function(grunt) {
     var templateData = config.templateData;
     var helpers = config.helpers ? getConfig(config.helpers): [];
     var partials = config.partials ? getConfig(config.partials) : [];
-    
+    var done = this.async();
+
     helpers.forEach(function (helper) {
       var basename = getBasename(helper, config.helpers);
       handlebars.registerHelper(basename, require(path.resolve(helper)));
@@ -161,5 +162,6 @@ module.exports = function(grunt) {
       grunt.file.write(getName(config.output, basename), html);
     });
 
+    process.nextTick(done);
   });
 };

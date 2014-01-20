@@ -1,7 +1,7 @@
 {
   "name": "grunt-compile-handlebars",
   "description": "Compile handlebar templates, outputting static HTML",
-  "version": "0.6.2",
+  "version": "0.6.3",
   "homepage": "https://github.com/patrickkettner/grunt-compile-handlebars",
   "author": {
     "name": "Patrick Kettner",
