@@ -80,7 +80,7 @@ module.exports = function(grunt) {
       basename = filename.split('/').pop().split('.');
       basename.pop();
     }
-    return basename.toString();
+    return basename.join('.');
   };
 
   var getName = function(filename, basename) {
