@@ -2,7 +2,7 @@
 * grunt-compile-handlebars
 * https://github.com/patrickkettner/grunt-compile-handlebars
 *
-* Copyright (c) 2013 Patrick Kettner, contributors
+* Copyright (c) 2014 Patrick Kettner, contributors
 * Licensed under the MIT license.
 */
 

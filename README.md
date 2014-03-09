@@ -106,5 +106,5 @@ I had to work with several hundred repeated data structures that never changed. 
  * 0.0.1 - Dudley - Initial commit
 
 ## License
-Copyright (c) 2013 Patrick Kettner
+Copyright (c) 2014 Patrick Kettner
 Licensed under the MIT license.
