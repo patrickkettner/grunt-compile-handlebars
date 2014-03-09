@@ -53,6 +53,18 @@ exports.clean = {
 
     test.done();
   },
+  allArray: function(test) {
+    test.expect(2);
+    var germanActual = grunt.file.read('tmp/deep/german.html');
+    var romanianActual = grunt.file.read('tmp/deep/romanian.html');
+    var germanExpected = grunt.file.read('test/expected/german.html');
+    var romanianExpected = grunt.file.read('test/expected/romanian.html');
+
+    test.equal(germanActual, germanExpected);
+    test.equal(romanianActual, romanianExpected, 'array output should be working');
+
+    test.done();
+  },
   globbedTemplateAndOutput: function(test) {
     test.expect(2);
 

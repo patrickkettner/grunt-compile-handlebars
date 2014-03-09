@@ -62,6 +62,13 @@ module.exports = function(grunt) {
         templateData: 'test/fixtures/data.json',
         output: 'tmp/dynamicPost.html'
       },
+      anyArray: {
+        template: ['test/fixtures/deep/romanian.handlebars', 'test/fixtures/deep/german.handlebars'],
+        templateData: ['test/fixtures/deep/romanian.json', 'test/fixtures/deep/german.json'],
+        output: ['tmp/deep/romanian.html','tmp/deep/german.html'],
+        helpers: ['test/helpers/super_helper.js'],
+        partials: ['test/fixtures/deep/shared/foo.handlebars']
+      },
       globbedTemplateAndOutput: {
         template: 'test/fixtures/deep/**/*.handlebars',
         templateData: 'test/fixtures/deep/**/*.json',

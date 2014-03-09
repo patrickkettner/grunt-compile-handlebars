@@ -61,6 +61,7 @@ module.exports = function(grunt) {
    * and if so, returns the unglobbed
    * version of the filename       */
   var isGlob = function(filename) {
+    if (!filename) return;
     var match = filename.match(/[^\*]*/);
     if (match[0] !== filename) {
       return match.pop();
@@ -71,8 +72,9 @@ module.exports = function(grunt) {
    * any globs are used, so the globbed outputs
    * can be generated                        */
   var getBasename = function(filename, template) {
-    var glob = isGlob(template);
-    var basename;
+    var basename, glob;
+    template = Array.isArray(template) ? filename : template;
+    glob = isGlob(template);
     if (glob) {
       basename = filename.slice(glob.length, filename.length).split('.');
       basename.pop();
@@ -84,7 +86,13 @@ module.exports = function(grunt) {
     return basename.join('.');
   };
 
-  var getName = function(filename, basename) {
+  var getName = function(filename, basename, index) {
+    if (Array.isArray(filename)) {
+      var file = filename[index];
+      if (file) return file;
+      grunt.log.error('You need to assign the same number of ouputs as you do templates when using array notation.');
+      return;
+    }
     if (typeof filename === 'object') {
       return filename;
     }
@@ -138,29 +146,29 @@ module.exports = function(grunt) {
       handlebars.registerPartial(basename, require(fs.realpathSync(partial)));
     });
 
-    templates.forEach(function(template) {
+    templates.forEach(function(template, index) {
       var compiledTemplate = handlebars.compile(parseData(template));
       var basename = getBasename(template, config.template);
       var html = '';
       var json;
 
       if (config.preHTML) {
-        html += parseData(getName(config.preHTML, basename));
+        html += parseData(getName(config.preHTML, basename, index));
       }
 
       if (config.globals) {
-        json = mergeJson(parseData(getName(templateData, basename)), config.globals);
+        json = mergeJson(parseData(getName(templateData, basename, index)), config.globals);
       } else {
-        json = parseData(getName(templateData, basename));
+        json = parseData(getName(templateData, basename, index));
       }
 
       html += compiledTemplate(json);
 
       if (config.postHTML) {
-        html += parseData(getName(config.postHTML, basename));
+        html += parseData(getName(config.postHTML, basename, index));
       }
 
-      grunt.file.write(getName(config.output, basename), html);
+      grunt.file.write(getName(config.output, basename, index), html);
     });
 
     process.nextTick(done);
