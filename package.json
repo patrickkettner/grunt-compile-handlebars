@@ -39,9 +39,11 @@
     "grunt": "~0.4.0"
   },
   "dependencies": {
-    "handlebars": ">= 1"
+    "handlebars": ">= 1",
+    "lodash.assign": "^2.4.1"
   },
   "keywords": [
-    "gruntplugin", "handlebars"
+    "gruntplugin",
+    "handlebars"
   ]
 }

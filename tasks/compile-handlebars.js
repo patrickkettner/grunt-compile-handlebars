@@ -10,12 +10,13 @@
 
 module.exports = function(grunt) {
   var handlebars = require('handlebars');
+  var extend = require('lodash.assign');
 
   /* Normalizes the input so that
    * it is always an array for the
    * forEach loop                */
   var getConfig = function(config) {
-    if (grunt.util.kindOf(config) === 'array') {
+    if (Array.isArray(config)) {
       return config;
     }
     if (grunt.file.expand(config).length) {
@@ -42,7 +43,7 @@ module.exports = function(grunt) {
   var parseData = function(data) {
     /* grunt.file chokes on objects, so we
     * check for it immiedietly */
-    if (grunt.util.kindOf(data) === 'object') {
+    if (typeof data === 'object') {
       return data;
     }
 
@@ -84,7 +85,7 @@ module.exports = function(grunt) {
   };
 
   var getName = function(filename, basename) {
-    if (grunt.util.kindOf(filename) === 'object') {
+    if (typeof filename === 'object') {
       return filename;
     }
     if (grunt.file.exists(filename)) {
@@ -112,7 +113,7 @@ module.exports = function(grunt) {
         if (typeof(source) !== 'object') {
           source = fragment;
         }
-        json = grunt.util._.extend(source, fragment);
+        json = extend(source, fragment);
       }
     });
     return json;
