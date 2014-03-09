@@ -120,7 +120,7 @@ module.exports = function(grunt) {
   };
 
   grunt.registerMultiTask('compile-handlebars', 'Compile Handlebars templates ', function() {
-    var path = require('path');
+    var fs = require('fs');
     var config = this.data;
     var templates = getConfig(config.template);
     var templateData = config.templateData;
@@ -130,12 +130,12 @@ module.exports = function(grunt) {
 
     helpers.forEach(function (helper) {
       var basename = getBasename(helper, config.helpers);
-      handlebars.registerHelper(basename, require(path.resolve(helper)));
+      handlebars.registerHelper(basename, require(fs.realpathSync(helper)));
     });
 
     partials.forEach(function (partial) {
       var basename = getBasename(partial, config.partials);
-      handlebars.registerPartial(basename, require(path.resolve(partial)));
+      handlebars.registerPartial(basename, require(fs.realpathSync(partial)));
     });
 
     templates.forEach(function(template) {
