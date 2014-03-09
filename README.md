@@ -97,6 +97,8 @@ Heres a few of the ways you can use it
 I had to work with several hundred repeated data structures that never changed. Keeping them all in html was silly, but pushing out a template engine for the end user to compile the same information multiple times was even sillier. This allows you to have your templated cake and eat it too.
 
 ## Release History
+ * 0.7.1 - Margaret - fix 0.8 compatibility
+ * 0.7.0 - Rosemary - Allow for arrays instead of globbing, remove depreicated grunt methods
  * 0.6.3 - Pelé  - @mattcg fixed an issue with large amounts of templates
  * 0.6.2 - Dignan  - @goette added support for a global json config
  * 0.6.1 - Grace  - @robinqu added support for handlebars partials
