@@ -1,4 +1,5 @@
 {
+    "templateName": "textspecTemplate",
     "textspec": {
         "hi": "Hello from textspec.json"
     }
