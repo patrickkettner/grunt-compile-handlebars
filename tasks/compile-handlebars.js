@@ -10,7 +10,7 @@
 
 module.exports = function(grunt) {
   var handlebars = require('handlebars');
-  var extend = require('lodash.assign');
+  var merge = require('lodash.merge');
 
   /* Normalizes the input so that
    * it is always an array for the
@@ -106,24 +106,26 @@ module.exports = function(grunt) {
   };
 
   var mergeJson = function(source, globals) {
-    var json, fragment;
+    var json = {}, fragment;
 
-    globals.forEach(function (globals) {
-      if (!grunt.file.exists(globals))
-        grunt.log.error("JSON file " + globals + " not found.");
+    globals.forEach(function (global) {
+      if (!grunt.file.exists(global))
+        grunt.log.error("JSON file " + global + " not found.");
       else {
         try {
-          fragment = grunt.file.readJSON(globals);
+          fragment = grunt.file.readJSON(global);
         }
         catch (e) {
           grunt.fail.warn(e);
         }
-        if (typeof(source) !== 'object') {
-          source = fragment;
-        }
-        json = extend(source, fragment);
+        merge(json, fragment);
       }
     });
+
+    if (typeof(source) === 'object') {
+      merge(json, source);
+    }
+
     return json;
   };
 

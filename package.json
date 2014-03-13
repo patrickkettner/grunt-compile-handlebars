@@ -40,7 +40,7 @@
   },
   "dependencies": {
     "handlebars": ">= 1",
-    "lodash.assign": ">= 2"
+    "lodash.merge": ">= 2"
   },
   "keywords": [
     "gruntplugin",

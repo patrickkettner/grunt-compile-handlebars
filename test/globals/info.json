@@ -1,3 +1,7 @@
 {
-    "author": "Written by Mr. HelloWorld"
+    "templateName": "infoTemplate",
+    "author": "Written by Mr. HelloWorld",
+    "textspec": {
+        "hi": "Goodbye from info.json"
+    }
 }
