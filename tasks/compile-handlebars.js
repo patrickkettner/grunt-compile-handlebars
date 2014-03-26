@@ -145,7 +145,7 @@ module.exports = function(grunt) {
 
     partials.forEach(function (partial) {
       var basename = getBasename(partial, config.partials);
-      handlebars.registerPartial(basename, require(fs.realpathSync(partial)));
+      handlebars.registerPartial(basename, fs.readFileSync(fs.realpathSync(partial), "utf8"));
     });
 
     templates.forEach(function(template, index) {
