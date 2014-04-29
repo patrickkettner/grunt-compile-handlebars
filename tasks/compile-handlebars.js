@@ -39,7 +39,7 @@ module.exports = function(grunt) {
 
   /* Gets the final representation of the
    * input, wether it be object, or string */
-  var parseData = function(data) {
+  var parseData = function(data, dontParse) {
     /* grunt.file chokes on objects, so we
     * check for it immiedietly */
     if (typeof data === 'object') {
@@ -50,7 +50,9 @@ module.exports = function(grunt) {
     * a file. */
     try {
       data = grunt.file.read(data);
-      data = JSON.parse(data);
+      if (!dontParse) {
+        data = JSON.parse(data);
+      }
     }
     catch (e) {}
     return data;

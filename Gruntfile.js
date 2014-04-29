@@ -36,6 +36,11 @@ module.exports = function(grunt) {
         templateData: 'test/fixtures/data.json',
         output: 'tmp/allStatic.html'
       },
+      jsonHandlebars: {
+        template: 'test/fixtures/sweedishTemplate.json',
+        templateData: 'test/fixtures/sweedishData.json',
+        output: 'tmp/sweedish.json'
+      },
       dynamicTemplate: {
         template: '<h1>{{salutation}}{{punctuation}} {{location}}</h1>',
         templateData: 'test/fixtures/data.json',

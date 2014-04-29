@@ -13,6 +13,16 @@ exports.clean = {
 
     test.done();
   },
+  jsonHandlebars: function(test) {
+    test.expect(1);
+
+    var actual   = grunt.file.read('tmp/sweedish.json');
+    var expected = grunt.file.read('test/expected/sweedish.json');
+
+    test.equal(actual, expected, 'json handlebars templates should work');
+
+    test.done();
+  },
   dynamicTemplate: function(test) {
     test.expect(1);
 
