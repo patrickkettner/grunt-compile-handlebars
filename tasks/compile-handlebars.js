@@ -16,11 +16,10 @@ module.exports = function(grunt) {
    * it is always an array for the
    * forEach loop                */
   var getConfig = function(config) {
-    if (Array.isArray(config)) {
-      return config;
-    }
-    if (grunt.file.expand(config).length) {
-      return grunt.file.expand(config);
+    if (!config) return [];
+    var files = grunt.file.expand(config);
+    if (files.length) {
+      return files;
     }
     return [config];
   };
@@ -122,7 +121,7 @@ module.exports = function(grunt) {
       }
     });
 
-    if (typeof(source) === 'object') {
+    if (typeof source === 'object') {
       merge(json, source);
     }
 
@@ -134,8 +133,8 @@ module.exports = function(grunt) {
     var config = this.data;
     var templates = getConfig(config.template);
     var templateData = config.templateData;
-    var helpers = config.helpers ? getConfig(config.helpers): [];
-    var partials = config.partials ? getConfig(config.partials) : [];
+    var helpers = getConfig(config.helpers);
+    var partials = getConfig(config.partials);
     var done = this.async();
 
     helpers.forEach(function (helper) {
@@ -149,20 +148,17 @@ module.exports = function(grunt) {
     });
 
     templates.forEach(function(template, index) {
-      var compiledTemplate = handlebars.compile(parseData(template));
+      var compiledTemplate = handlebars.compile(parseData(template, true));
       var basename = getBasename(template, config.template);
       var html = '';
       var json;
+
 
       if (config.preHTML) {
         html += parseData(getName(config.preHTML, basename, index));
       }
 
-      if (config.globals) {
-        json = mergeJson(parseData(getName(templateData, basename, index)), config.globals);
-      } else {
-        json = parseData(getName(templateData, basename, index));
-      }
+      json = mergeJson(parseData(getName(templateData, basename, index)), config.globals || []);
 
       html += compiledTemplate(json);
 
