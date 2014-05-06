@@ -133,6 +133,7 @@ module.exports = function(grunt) {
   grunt.registerMultiTask('compile-handlebars', 'Compile Handlebars templates ', function() {
     var fs = require('fs');
     var config = this.data;
+    handlebars = config.handlebars || handlebars;
     var templates = getConfig(config.template);
     var templateData = config.templateData;
     var helpers = getConfig(config.helpers);

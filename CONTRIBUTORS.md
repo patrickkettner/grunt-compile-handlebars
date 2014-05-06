@@ -8,3 +8,4 @@ These people have gone out of their way to add value to this little tool.
 - Martin Götte [github](https://github.com/goette) [twitter](https://twitter.com/mrtngtt)
 - Matthew Galizia [github](https://github.com/mattcg) [twitter](https://twitter.com/mcaruanagalizia)
 - Scott Timmins [github](https://github.com/stimmins)
+- Anders D. Johnson [github](https://github.com/adjohnson916) [twitter](https://twitter.com/adjohnson916) [website](http://andrz.me)
