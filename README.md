@@ -93,10 +93,60 @@ Heres a few of the ways you can use it
 }
 ```
 
+The available configuration options are as follows
+
+Unless otherwise noted, all configurable values can be represented as
+* a string representing the path to a specific file
+* a string representing the path to a [globbed representation](http://gruntjs.com/api/grunt.file#globbing-patterns) of the files, matched up against the values resolved from the `template` configuration
+* an array of literal paths, globbed paths, or a combination of the two
+
+__`template`__ - The template fed to handlebars. In addition to the normal configurable values, it can also be an inline string representation of a template (e.g. raw html and handlebars).
+
+__`preHTML`__ - Static text to be inserted before the compiled template
+__`postHTML`__ - Static text to be inserted after the compiled template
+
+__`templateData` ~~ The data being fed to compiled template, in addition to the normal configurable values, this can be
+* an inline string representation of a data (I don't know why you would do that though, when you can do...)
+* an inline JSON representation of a data
+
+__`output`__ - the file(s) that handlebars saves the files to. This can be
+__`globals`__ - globals that can be included, useful for when you have template specific data, but want some data available to all templates
+__`helpers`__ - handlebars helpers
+__`partials`__ - handlebars partials
+
+__`registerFullPath`__ - normally, helpers and partials are registered under their basename, rather than their path (e.g. partial at `partials/deep/awesomePartial.handlebars` is registered as `{{> awesomePartial}}`). When set to `true`, helpers and partials are registered under their full paths (e.g. {{> partials/deep/awesomePartial}}), to prevent clobbering after resolving globbed values.
+
+
+#### A note on globing
+
+When you specify templates using globs, the values from `template` are used to create the values for output, for example, if your file structure looks like this
+
+```
+|-foo
+  |-bar.handlebars
+  |-baz.handlebars
+  |-bar.json
+  |-baz.json
+```
+
+and your configuration looks like this
+
+```JSON
+{
+  "template": "./foo/*.handlebars",
+  "templateData": "./foo/*.json",
+  "output":  "./foo/*.html"
+}
+```
+
+the output would be `./foo/bar.html` and `./foo/baz.html`
+
+
 ### Why
 I had to work with several hundred repeated data structures that never changed. Keeping them all in html was silly, but pushing out a template engine for the end user to compile the same information multiple times was even sillier. This allows you to have your templated cake and eat it too.
 
 ## Release History
+ * 0.7.5 - Redford - add `registerFullPath` option to prevent partial/helper registration clobbering, update README
  * 0.7.4 - M. Jean - don't send objects to handlebars.compile, code cleanup
  * 0.7.3 - Cousin Ben - switch from require to readFile to allow for html in partials
  * 0.7.2 - Bernice - @stimmins improved handling of templateData and globals

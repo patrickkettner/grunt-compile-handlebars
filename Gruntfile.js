@@ -91,6 +91,17 @@ module.exports = function(grunt) {
           'test/globals/info.json',
           'test/globals/textspec.json'
         ]
+      },
+      registerFullPath: {
+        template: '<h1>{{salutation}}{{punctuation}} {{location}}</h1>{{> test/fixtures/deep/shared/pathTest}}',
+        templateData: {
+          "salutation": "Hallo",
+          "punctuation": ",",
+          "location": "Welt"
+        },
+        output: 'tmp/fullPath.html',
+        partials: 'test/fixtures/deep/shared/**/*.handlebars',
+        registerFullPath: true
       }
     },
 

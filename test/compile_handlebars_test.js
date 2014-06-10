@@ -108,5 +108,15 @@ exports.clean = {
     test.equal(actual, expected, 'Use specific templateName.json per templateName.handlebars (as in globbedTemplateAndOutput) plus multiple global json on top');
 
     test.done();
+  },
+  registerFullPath: function (test) {
+    test.expect(1);
+
+    var actual = grunt.file.read('tmp/fullPath.html');
+    var expected = grunt.file.read('test/expected/fullPath.html');
+
+    test.equal(actual, expected, 'Partials and helpers referenced at their full paths should work when registerFullParth is true');
+
+    test.done();
   }
 };

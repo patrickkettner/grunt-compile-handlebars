@@ -130,24 +130,52 @@ module.exports = function(grunt) {
     return json;
   };
 
+  var shouldRegisterFullPaths = function(itShould, type) {
+
+    if (itShould && typeof itShould === 'string') {
+      itShould = itShould.toLowerCase().indexOf(type) === 0;
+    }
+
+    return itShould;
+  };
+
   grunt.registerMultiTask('compile-handlebars', 'Compile Handlebars templates ', function() {
     var fs = require('fs');
     var config = this.data;
-    handlebars = config.handlebars || handlebars;
     var templates = getConfig(config.template);
     var templateData = config.templateData;
     var helpers = getConfig(config.helpers);
     var partials = getConfig(config.partials);
     var done = this.async();
 
+    handlebars = config.handlebars || handlebars;
+
     helpers.forEach(function (helper) {
-      var basename = getBasename(helper, config.helpers);
-      handlebars.registerHelper(basename, require(fs.realpathSync(helper)));
+        var name = shouldRegisterFullPaths(config.registerFullPath, 'helpers') ?
+          // full path, minus extention
+          helper.replace(/\.[^/.]+$/, "") :
+          // just the file's name
+          getBasename(helper, config.helpers);
+
+        if (handlebars.helpers[name]) {
+          grunt.log.error(name + ' is already registered, clobbering with the new value. Consider setting `registerFullPath` to true');
+        }
+
+        handlebars.registerHelper(name, require(fs.realpathSync(helper)));
     });
 
     partials.forEach(function (partial) {
-      var basename = getBasename(partial, config.partials);
-      handlebars.registerPartial(basename, fs.readFileSync(fs.realpathSync(partial), "utf8"));
+        var name = shouldRegisterFullPaths(config.registerFullPath, 'partials') ?
+          // full path, minus extention
+          partial.replace(/\.[^/.]+$/, "") :
+          // just the file's name
+          getBasename(partial, config.partials);
+
+        if (handlebars.partials[name]) {
+          grunt.log.error(name + ' is already registered, clobbering with the new value. Consider setting `registerFullPath` to true');
+        }
+
+      handlebars.registerPartial(name, fs.readFileSync(fs.realpathSync(partial), "utf8"));
     });
 
     templates.forEach(function(template, index) {
