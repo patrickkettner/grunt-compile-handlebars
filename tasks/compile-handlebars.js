@@ -100,7 +100,7 @@ module.exports = function(grunt) {
     if (grunt.file.exists(filename)) {
       return filename;
     }
-    if (isGlob(filename)) {
+    if (isGlob(filename) !== undefined) {
       return isGlob(filename) + basename + filetype(filename);
     }
     return filename;
