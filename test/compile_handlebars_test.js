@@ -195,5 +195,19 @@ exports.clean = {
     test.equal(actual, expected, 'Helpers and partials should be corrected renderred');
 
     test.done();
-  }
+  },
+  parentWithChild: function(test) {
+    test.expect(2);
+
+    var parentActual   = grunt.file.read('tmp/blog.html');
+    var parentExpected = grunt.file.read('test/expected/blog.html');
+    var childActual   = grunt.file.read('tmp/blog/blog-post1.html');
+    var childExpected = grunt.file.read('test/expected/blog/blog-post1.html');
+
+    test.equal(parentActual, parentExpected, 'Parent file should contain both parent and child content.');
+
+    test.equal(childActual, childExpected, 'Child pages should work.');
+
+    test.done();
+  },
 };

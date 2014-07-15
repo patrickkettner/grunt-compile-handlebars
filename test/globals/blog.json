@@ -1,0 +1,31 @@
+{
+    "siteTitle": "My Personal Blog",
+    "pages": {
+        "blog": {
+            "title": "Blog Home",
+            "content": "This page lists all blog posts"
+        }
+    },
+    "posts": {
+        "post1": {
+            "title": "Blog Post 1",
+            "content": "Blog Post 1 Content"
+        },
+        "post2": {
+            "title": "Blog Post 2",
+            "content": "Blog Post 2 Content"
+        },
+        "post3": {
+            "title": "Blog Post 3",
+            "content": "Blog Post 3 Content"
+        },
+        "post4": {
+            "title": "Blog Post 4 Single Page",
+            "content": "Blog Post 4 Content"
+        },
+        "post5": {
+            "title": "Blog Post 5 Single Page",
+            "content": "Blog Post 5 Content"
+        }
+    }
+}
