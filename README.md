@@ -146,6 +146,7 @@ the output would be `./foo/bar.html` and `./foo/baz.html`
 I had to work with several hundred repeated data structures that never changed. Keeping them all in html was silly, but pushing out a template engine for the end user to compile the same information multiple times was even sillier. This allows you to have your templated cake and eat it too.
 
 ## Release History
+ * 0.7.7 - Uzi - swap out `JSON.parse` for `alce.parse`, allowing for (technically invalid) single quoted json
  * 0.7.6 - Kristofferson - explicitly check that `isGlob` is undefined, preventing a false negative on empty strings
  * 0.7.5 - Redford - add `registerFullPath` option to prevent partial/helper registration clobbering, update README
  * 0.7.4 - M. Jean - don't send objects to handlebars.compile, code cleanup
