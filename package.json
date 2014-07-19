@@ -40,7 +40,8 @@
   },
   "dependencies": {
     "handlebars": ">= 1",
-    "lodash.merge": ">= 2"
+    "lodash.merge": ">= 2",
+    "alce": "^1.0.0"
   },
   "keywords": [
     "gruntplugin",

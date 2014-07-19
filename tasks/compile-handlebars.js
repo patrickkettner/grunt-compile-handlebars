@@ -9,12 +9,11 @@
 'use strict';
 
 module.exports = function(grunt) {
-  var handlebars = require('handlebars');
   var merge = require('lodash.merge');
+  var alce = require('alce');
+  var handlebars;
 
-  /* Normalizes the input so that
-   * it is always an array for the
-   * forEach loop                */
+  // Normalizes the input so that it is always an array for the forEach loop
   var getConfig = function(config) {
     if (!config) return [];
     var files = grunt.file.expand(config);
@@ -24,9 +23,7 @@ module.exports = function(grunt) {
     return [config];
   };
 
-  /* Guesses the file extension based on
-   * the string after the last dot of the
-   * of the filepath                  */
+  // Guesses the file extension based on the string after the last dot of the of the filepath
   var filetype = function(filepath) {
     var extension = filepath.split('/').pop().split('.');
     extension.shift();
@@ -37,30 +34,27 @@ module.exports = function(grunt) {
     return extension;
   };
 
-  /* Gets the final representation of the
-   * input, wether it be object, or string */
+  // Gets the final representation of the input, wether it be object, or string
   var parseData = function(data, dontParse) {
-    /* grunt.file chokes on objects, so we
-    * check for it immiedietly */
+    // grunt.file chokes on objects, so we check for it immiedietly
     if (typeof data === 'object') {
       return data;
     }
 
-    /* data isn't an object, so its probably
-    * a file. */
+    // `data` isn't an object, so its probably a file
     try {
+      // alce allows us to parse single-quote JSON (which is tehcnically invalid, and thereby chokes JSON.parse)
       data = grunt.file.read(data);
       if (!dontParse) {
-        data = JSON.parse(data);
+        data = alce.parse(data);
       }
     }
     catch (e) {}
+
     return data;
   };
 
-  /* Checks if the input is a glob
-   * and if so, returns the unglobbed
-   * version of the filename       */
+  // Checks if the input is a glob and if so, returns the unglobbed version of the filename
   var isGlob = function(filename) {
     if (!filename) return;
     var match = filename.match(/[^\*]*/);
@@ -69,9 +63,7 @@ module.exports = function(grunt) {
     }
   };
 
-  /* Figures out the name of the file before
-   * any globs are used, so the globbed outputs
-   * can be generated                        */
+  // Figures out the name of the file before any globs are used, so the globbed outputs can be generated
   var getBasename = function(filename, template) {
     var basename, glob;
     template = Array.isArray(template) ? filename : template;
@@ -110,8 +102,9 @@ module.exports = function(grunt) {
     var json = {}, fragment;
 
     globals.forEach(function (global) {
-      if (!grunt.file.exists(global))
+      if (!grunt.file.exists(global)) {
         grunt.log.error("JSON file " + global + " not found.");
+      }
       else {
         try {
           fragment = grunt.file.readJSON(global);
@@ -122,6 +115,7 @@ module.exports = function(grunt) {
         merge(json, fragment);
       }
     });
+
 
     if (typeof source === 'object') {
       merge(json, source);
@@ -148,7 +142,7 @@ module.exports = function(grunt) {
     var partials = getConfig(config.partials);
     var done = this.async();
 
-    handlebars = config.handlebars || handlebars;
+    handlebars = config.handlebars || require('handlebars');
 
     helpers.forEach(function (helper) {
         var name = shouldRegisterFullPaths(config.registerFullPath, 'helpers') ?
