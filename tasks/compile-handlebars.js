@@ -64,11 +64,16 @@ module.exports = function(grunt) {
   };
 
   // Figures out the name of the file before any globs are used, so the globbed outputs can be generated
-  var getBasename = function(filename, template) {
-    var basename, glob;
+  var getBasename = function(filename, template, outputInInput) {
+    var basename;
+    var glob;
+
     template = Array.isArray(template) ? filename : template;
     glob = isGlob(template);
-    if (glob) {
+    if (outputInInput) {
+      basename = filename.split('.').pop();
+    }
+    else if (glob) {
       basename = filename.slice(glob.length, filename.length).split('.');
       basename.pop();
     }
@@ -140,6 +145,7 @@ module.exports = function(grunt) {
     var templateData = config.templateData;
     var helpers = getConfig(config.helpers);
     var partials = getConfig(config.partials);
+    var outputInInput = config.outputInInput === true;
     var done = this.async();
 
     handlebars = config.handlebars || require('handlebars');
@@ -175,6 +181,7 @@ module.exports = function(grunt) {
     templates.forEach(function(template, index) {
       var compiledTemplate = handlebars.compile(parseData(template, true));
       var basename = getBasename(template, config.template);
+      var outputBasename = getBasename(template, config.template, outputInInput);
       var html = '';
       var json;
 
@@ -191,7 +198,7 @@ module.exports = function(grunt) {
         html += parseData(getName(config.postHTML, basename, index));
       }
 
-      grunt.file.write(getName(config.output, basename, index), html);
+      grunt.file.write(getName(config.output, outputBasename, index), html);
     });
 
     process.nextTick(done);

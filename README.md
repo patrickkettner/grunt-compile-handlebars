@@ -110,12 +110,27 @@ __`templateData` ~~ The data being fed to compiled template, in addition to the 
 * an inline JSON representation of a data
 
 __`output`__ - the file(s) that handlebars saves the files to. This can be
+* a string representing the path to a specific file
+* a string representing the path to a [globbed representation](http://gruntjs.com/api/grunt.file#globbing-patterns) of the files.
+* an array of literal paths, globbed paths, or a combination of the two
+
 __`globals`__ - globals that can be included, useful for when you have template specific data, but want some data available to all templates
 __`helpers`__ - handlebars helpers
 __`partials`__ - handlebars partials
 
 __`registerFullPath`__ - normally, helpers and partials are registered under their basename, rather than their path (e.g. partial at `partials/deep/awesomePartial.handlebars` is registered as `{{> awesomePartial}}`). When set to `true`, helpers and partials are registered under their full paths (e.g. {{> partials/deep/awesomePartial}}), to prevent clobbering after resolving globbed values.
 
+__`outputInInput`__ - most of the time, you define your handlebars files in one directory, and want them to be outputted into another directory. However, when you glob your all your files (`./**/*.handlebars`) this just outputs all your files to your root directory. In this case, you can add the boolean `outputInInput` to the configuration, which will output the globbed html into the same folders that the handlebar files are found. e.g, given the following configuraiton
+
+```
+  gottaGlobEmAll: {
+    template: "./**/*.handlebars",
+    templateData: {},
+    output: "./**/*.html"
+  }
+```
+
+`./foo/bar.handlebars` would output to `./bar.html`. By adding `outputInInput: true` to the configuration, it will output to `./foo/bar.html`
 
 #### A note on globing
 
