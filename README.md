@@ -69,7 +69,7 @@ Heres a few of the ways you can use it
     },
     allArray: {
       template: ['test/fixtures/deep/spanish.handlebars', 'test/fixtures/deep/deeper/portuguese.handlebars'],
-      templateData: ['test/fixtures/deep/spanish.handlebars', 'test/fixtures/deep/deeper/portuguese.json'],
+      templateData: ['test/fixtures/deep/deeper/spanish.json', 'test/fixtures/deep/deeper/portuguese.json'],
       output: ['tmp/deep/spanish.html','tmp/deep/deeper/portuguese.html'],
       helpers: ['test/helpers/super_helper.js'],
       partials: ['test/fixtures/deep/shared/foo.handlebars']
