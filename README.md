@@ -19,7 +19,7 @@ grunt.loadNpmTasks('grunt-compile-handlebars');
 patrick kettner - a web developer who consistently worked with large static data sets.
 
 ### What
-grunt-compile-handlebars takes in a handlebars tempalte (and optionally static pre and post html), runs a dataset over it, and outputs static html.
+grunt-compile-handlebars takes in a handlebars template (and optionally static pre and post html), runs a dataset over it, and outputs static html.
 
 ### Where
 inside of a grunt task. I assume you know what gruntjs is, but if not - [gruntjs.com](http://gruntjs.com)
