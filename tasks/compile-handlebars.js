@@ -9,8 +9,10 @@
 'use strict';
 
 module.exports = function(grunt) {
-  var merge = require('lodash.merge');
+  var _merge = require('lodash.merge');
+  var _toArray = require('lodash.toarray');
   var alce = require('alce');
+  var path = require('path');
   var handlebars;
 
   // Normalizes the input so that it is always an array for the forEach loop
@@ -21,17 +23,6 @@ module.exports = function(grunt) {
       return files;
     }
     return [config];
-  };
-
-  // Guesses the file extension based on the string after the last dot of the of the filepath
-  var filetype = function(filepath) {
-    var extension = filepath.split('/').pop().split('.');
-    extension.shift();
-    extension = extension.join('.');
-    if (extension) {
-      extension = '.' + extension;
-    }
-    return extension;
   };
 
   // Gets the final representation of the input, wether it be object, or string
@@ -71,7 +62,7 @@ module.exports = function(grunt) {
     template = Array.isArray(template) ? filename : template;
     glob = isGlob(template);
     if (outputInInput) {
-      basename = filename.split('.').pop();
+      basename = _toArray(filename.split('.').pop()) ;
     }
     else if (glob) {
       basename = filename.slice(glob.length, filename.length).split('.');
@@ -98,7 +89,7 @@ module.exports = function(grunt) {
       return filename;
     }
     if (isGlob(filename) !== undefined) {
-      return isGlob(filename) + basename + filetype(filename);
+      return isGlob(filename) + basename + path.extname(filename);
     }
     return filename;
   };
@@ -117,13 +108,13 @@ module.exports = function(grunt) {
         catch (e) {
           grunt.fail.warn(e);
         }
-        merge(json, fragment);
+        _merge(json, fragment);
       }
     });
 
 
     if (typeof source === 'object') {
-      merge(json, source);
+      _merge(json, source);
     }
 
     return json;
@@ -141,7 +132,6 @@ module.exports = function(grunt) {
   grunt.registerMultiTask('compile-handlebars', 'Compile Handlebars templates ', function() {
     var fs = require('fs');
     var path = require('path');
-    var iconv = require('iconv-lite');
     var config = this.data;
     var templates = getConfig(config.template);
     var templateData = config.templateData;

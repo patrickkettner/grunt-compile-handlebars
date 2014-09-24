@@ -107,7 +107,7 @@ module.exports = function(grunt) {
         template: 'test/fixtures/deep/**/*.handlebars',
         templateData: 'test/fixtures/deep/**/*.json',
         output: 'tmp/concatGlobbed.html'
-      },
+      }
     },
 
     // Unit tests.
