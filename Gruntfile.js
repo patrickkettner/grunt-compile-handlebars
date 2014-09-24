@@ -102,7 +102,12 @@ module.exports = function(grunt) {
         output: 'tmp/fullPath.html',
         partials: 'test/fixtures/deep/shared/**/*.handlebars',
         registerFullPath: true
-      }
+      },
+      concatGlobbed: {
+        template: 'test/fixtures/deep/**/*.handlebars',
+        templateData: 'test/fixtures/deep/**/*.json',
+        output: 'tmp/concatGlobbed.html'
+      },
     },
 
     // Unit tests.

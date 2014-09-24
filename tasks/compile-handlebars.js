@@ -140,6 +140,8 @@ module.exports = function(grunt) {
 
   grunt.registerMultiTask('compile-handlebars', 'Compile Handlebars templates ', function() {
     var fs = require('fs');
+    var path = require('path');
+    var iconv = require('iconv-lite');
     var config = this.data;
     var templates = getConfig(config.template);
     var templateData = config.templateData;
@@ -182,9 +184,11 @@ module.exports = function(grunt) {
       var compiledTemplate = handlebars.compile(parseData(template, true));
       var basename = getBasename(template, config.template);
       var outputBasename = getBasename(template, config.template, outputInInput);
+      var outputPath = getName(config.output, basename, index);
+      var appendToFile = (Array.isArray(config.template) || !!isGlob(config.template)) && (config.output === outputPath);
+      var operation = appendToFile ? 'appendFileSync' : 'writeFileSync';
       var html = '';
       var json;
-
 
       if (config.preHTML) {
         html += parseData(getName(config.preHTML, basename, index));
@@ -198,7 +202,19 @@ module.exports = function(grunt) {
         html += parseData(getName(config.postHTML, basename, index));
       }
 
-      grunt.file.write(getName(config.output, outputBasename, index), html);
+
+      // shamefully copied straight out of grunt's file command, to allow for appending
+      // http://git.io/ZYGLEw
+      grunt.file.mkdir(path.dirname(outputPath));
+
+      try {
+        fs[operation](getName(config.output, outputBasename, index), html);
+        grunt.verbose.ok();
+        return true;
+      } catch(e) {
+        grunt.verbose.error();
+        throw grunt.util.error('Unable to write "' + outputPath + '" file (Error code: ' + e.code + ').', e);
+      }
     });
 
     process.nextTick(done);

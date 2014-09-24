@@ -118,5 +118,15 @@ exports.clean = {
     test.equal(actual, expected, 'Partials and helpers referenced at their full paths should work when registerFullParth is true');
 
     test.done();
+  },
+  concatGlobbed: function (test) {
+    test.expect(1);
+
+    var actual = grunt.file.read('tmp/concatGlobbed.html');
+    var expected = grunt.file.read('test/expected/concatGlobbed.html');
+
+    test.equal(actual, expected, 'Globbed templates should append when output is a singlefile');
+
+    test.done();
   }
 };
