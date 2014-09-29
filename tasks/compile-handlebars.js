@@ -17,7 +17,7 @@ module.exports = function(grunt) {
 
   // Normalizes the input so that it is always an array for the forEach loop
   var getConfig = function(config) {
-    if (!config) return [];
+app    if (!config) return [];
     var files = grunt.file.expand(config);
     if (files.length) {
       return files;
@@ -175,7 +175,7 @@ module.exports = function(grunt) {
       var basename = getBasename(template, config.template);
       var outputBasename = getBasename(template, config.template, outputInInput);
       var outputPath = getName(config.output, basename, index);
-      var appendToFile = (Array.isArray(config.template) || !!isGlob(config.template)) && (config.output === outputPath);
+      var appendToFile = (Array.isArray(config.template) || !!isGlob(config.template)) && (config.output === outputPath) && index != 0;
       var operation = appendToFile ? 'appendFileSync' : 'writeFileSync';
       var html = '';
       var json;
