@@ -175,7 +175,7 @@ module.exports = function(grunt) {
       var basename = getBasename(template, config.template);
       var outputBasename = getBasename(template, config.template, outputInInput);
       var outputPath = getName(config.output, basename, index);
-      var appendToFile = (Array.isArray(config.template) || !!isGlob(config.template)) && (config.output === outputPath);
+      var appendToFile = (index != 0) && (Array.isArray(config.template) || !!isGlob(config.template)) && (config.output === outputPath);
       var operation = appendToFile ? 'appendFileSync' : 'writeFileSync';
       var html = '';
       var json;
