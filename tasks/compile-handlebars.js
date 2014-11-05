@@ -142,6 +142,10 @@ module.exports = function(grunt) {
 
     handlebars = config.handlebars || require('handlebars');
 
+	if (data.initHandlebars) {
+		data.initHandlebars(handlebars);
+	}
+	
     helpers.forEach(function (helper) {
         var name = shouldRegisterFullPaths(config.registerFullPath, 'helpers') ?
           // full path, minus extention
