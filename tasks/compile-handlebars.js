@@ -142,8 +142,9 @@ module.exports = function(grunt) {
 
     handlebars = config.handlebars || require('handlebars');
 
-	if (data.initHandlebars) {
-		data.initHandlebars(handlebars);
+	var options = this.options();
+	if (options.initHandlebars) {
+		options.initHandlebars(handlebars);
 	}
 	
     helpers.forEach(function (helper) {
