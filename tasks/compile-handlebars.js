@@ -99,7 +99,7 @@ module.exports = function(grunt) {
     var json = {}, fragment;
 
     globals.forEach(function (global) {
-      if (grunt.util.kindOf(global) == 'string') {
+      if (grunt.util.kindOf(global) === 'string') {
         if (!grunt.file.exists(global)) {
           grunt.log.error("JSON file " + global + " not found.");
         }
