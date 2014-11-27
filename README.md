@@ -89,7 +89,13 @@ Heres a few of the ways you can use it
         'test/globals/info.json',
         'test/globals/textspec.json'
       ]
-    }
+    },
+    customHandlebars: {
+      template: '<h1>{{salutation}}{{punctuation}} {{location}}</h1>',
+      templateData: 'test/fixtures/data.json',
+      output: 'tmp/dynamicTemplate.html',
+      handlebars: 'node_modules/handlebars'
+    },
 }
 ```
 
@@ -131,6 +137,9 @@ __`outputInInput`__ - most of the time, you define your handlebars files in one 
 ```
 
 `./foo/bar.handlebars` would output to `./bar.html`. By adding `outputInInput: true` to the configuration, it will output to `./foo/bar.html`
+
+`handlebars` - a string representing the path to an instance of handlebars (if you don't want to use the bundeled version).
+Note: This __cannot__ be `require('handlebars')`, as that creates a circular reference. You need to pass the path to the instance you want to use, i.e. `handlebars: "./node_modules/handlebars"`
 
 #### A note on globing
 

@@ -13,6 +13,7 @@ module.exports = function(grunt) {
   var _toArray = require('lodash.toarray');
   var alce = require('alce');
   var path = require('path');
+  var handlebarsPath;
   var handlebars;
 
   // Normalizes the input so that it is always an array for the forEach loop
@@ -140,7 +141,8 @@ module.exports = function(grunt) {
     var outputInInput = config.outputInInput === true;
     var done = this.async();
 
-    handlebars = config.handlebars || require('handlebars');
+    handlebarsPath = config.handlebars ? path.resolve(config.handlebars) : 'handlebars';
+    handlebars = require(handlebarsPath);
 
     helpers.forEach(function (helper) {
         var name = shouldRegisterFullPaths(config.registerFullPath, 'helpers') ?
@@ -175,7 +177,7 @@ module.exports = function(grunt) {
       var basename = getBasename(template, config.template);
       var outputBasename = getBasename(template, config.template, outputInInput);
       var outputPath = getName(config.output, basename, index);
-      var appendToFile = (index != 0) && (Array.isArray(config.template) || !!isGlob(config.template)) && (config.output === outputPath);
+      var appendToFile = (index !== 0) && (Array.isArray(config.template) || !!isGlob(config.template)) && (config.output === outputPath);
       var operation = appendToFile ? 'appendFileSync' : 'writeFileSync';
       var html = '';
       var json;

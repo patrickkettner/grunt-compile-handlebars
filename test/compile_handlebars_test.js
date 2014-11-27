@@ -23,13 +23,23 @@ exports.clean = {
 
     test.done();
   },
+  dynamicHandlebars: function(test) {
+    test.expect(1);
+
+    var actual   = grunt.file.read('tmp/dynamicHandlebars.html');
+    var expected = grunt.file.read('test/expected/dynamicHandlebars.html');
+
+    test.equal(actual, expected, 'Passed reference to handlebars should work');
+
+    test.done();
+  },
   dynamicTemplate: function(test) {
     test.expect(1);
 
     var actual   = grunt.file.read('tmp/dynamicTemplate.html');
     var expected = grunt.file.read('test/expected/dynamicTemplate.html');
 
-    test.equal(actual, expected, 'Inline handlabrs should work');
+    test.equal(actual, expected, 'Inline handlebars should work');
 
     test.done();
   },
