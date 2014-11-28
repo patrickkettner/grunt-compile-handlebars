@@ -12,6 +12,7 @@ module.exports = function(grunt) {
 
   // Project configuration.
   grunt.initConfig({
+
     jshint: {
       all: [
         'Gruntfile.js',
@@ -95,7 +96,12 @@ module.exports = function(grunt) {
         partials: 'test/fixtures/deep/shared/**/*.handlebars',
         globals: [
           'test/globals/info.json',
-          'test/globals/textspec.json'
+          'test/globals/textspec.json',
+          {
+            textspec: {
+              "ps": "P.S. from Gruntfile.js"
+            }
+          }
         ]
       },
       registerFullPath: {
