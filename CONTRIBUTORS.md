@@ -10,3 +10,4 @@ These people have gone out of their way to add value to this little tool.
 - Scott Timmins [github](https://github.com/stimmins)
 - Anders D. Johnson [github](https://github.com/adjohnson916) [twitter](https://twitter.com/adjohnson916) [website](http://andrz.me)
 - Paul Mason [github](https://github.com/paulmason)
+- Igor Sadovskiy [github](https://github.com/isadovskiy)
