@@ -87,7 +87,12 @@ Heres a few of the ways you can use it
       partials: 'test/fixtures/deep/shared/**/*.handlebars',
       globals: [
         'test/globals/info.json',
-        'test/globals/textspec.json'
+        'test/globals/textspec.json',
+        {
+          "textspec": {
+            "ps": "P.S. from Gruntfile.js"
+          }
+        }
       ]
     },
     customHandlebars: {
@@ -170,6 +175,7 @@ the output would be `./foo/bar.html` and `./foo/baz.html`
 I had to work with several hundred repeated data structures that never changed. Keeping them all in html was silly, but pushing out a template engine for the end user to compile the same information multiple times was even sillier. This allows you to have your templated cake and eat it too.
 
 ## Release History
+ * 1.0.0 - Serge - Add inline object support for `globals`, fix `outputInInput`
  * 0.7.8 - Eli - add `outputInInput` setting to send outputted files back to their handlebars directory
  * 0.7.7 - Uzi - swap out `JSON.parse` for `alce.parse`, allowing for (technically invalid) single quoted json
  * 0.7.6 - Kristofferson - explicitly check that `isGlob` is undefined, preventing a false negative on empty strings
