@@ -134,11 +134,21 @@ module.exports = function(grunt) {
     return itShould;
   };
 
+  var getTemplates = function(templatesConfig){
+    if(Array.isArray(templatesConfig)){
+      return [].concat.apply([], templatesConfig.map(function (template) {
+        return getConfig(template);
+      }));
+    } else {
+      return getConfig(templatesConfig);
+    }
+  };
+
   grunt.registerMultiTask('compile-handlebars', 'Compile Handlebars templates ', function() {
     var fs = require('fs');
     var path = require('path');
     var config = this.data;
-    var templates = getConfig(config.template);
+    var templates = getTemplates(config.template);
     var templateData = config.templateData;
     var helpers = getConfig(config.helpers);
     var partials = getConfig(config.partials);
