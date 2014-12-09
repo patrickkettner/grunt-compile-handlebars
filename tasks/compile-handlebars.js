@@ -115,7 +115,7 @@ module.exports = function(grunt) {
           }
         }
       }
-        _merge(json, fragment);
+      _merge(json, fragment);
     });
 
     if (typeof source === 'object') {
@@ -152,9 +152,9 @@ module.exports = function(grunt) {
       var fullPath = helper.replace(/\.[^/.]+$/, "");
       var name = shouldRegisterFullPaths(config.registerFullPath, 'helpers') ?
         // full path, minus extention
-          fullPath :
+        fullPath :
         // just the file's name
-          getBasename(helper, config.helpers);
+        getBasename(helper, config.helpers);
 
       if (handlebars.helpers[name] && usedHelpers.indexOf(fullPath) == -1) {
         grunt.log.error(name + ' is already registered, clobbering with the new value. Consider setting `registerFullPath` to true');
@@ -162,16 +162,16 @@ module.exports = function(grunt) {
         usedHelpers.push(fullPath);
       }
 
-        handlebars.registerHelper(name, require(fs.realpathSync(helper)));
+      handlebars.registerHelper(name, require(fs.realpathSync(helper)));
     });
 
     partials.forEach(function (partial) {
       var fullPath = partial.replace(/\.[^/.]+$/, "");
       var name = shouldRegisterFullPaths(config.registerFullPath, 'partials') ?
         // full path, minus extention
-          fullPath :
+        fullPath :
         // just the file's name
-          getBasename(partial, config.partials);
+        getBasename(partial, config.partials);
 
       if (handlebars.partials[name] && usedPartials.indexOf(fullPath) == -1) {
         grunt.log.error(name + ' is already registered, clobbering with the new value. Consider setting `registerFullPath` to true');
