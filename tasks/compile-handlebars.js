@@ -15,6 +15,8 @@ module.exports = function(grunt) {
   var path = require('path');
   var handlebarsPath;
   var handlebars;
+  var usedPartials = [];
+  var usedHelpers = [];
 
   // Normalizes the input so that it is always an array for the forEach loop
   var getConfig = function(config) {
@@ -147,29 +149,35 @@ module.exports = function(grunt) {
     handlebars = require(handlebarsPath);
 
     helpers.forEach(function (helper) {
-        var name = shouldRegisterFullPaths(config.registerFullPath, 'helpers') ?
-          // full path, minus extention
-          helper.replace(/\.[^/.]+$/, "") :
-          // just the file's name
+      var fullPath = helper.replace(/\.[^/.]+$/, "");
+      var name = shouldRegisterFullPaths(config.registerFullPath, 'helpers') ?
+        // full path, minus extention
+          fullPath :
+        // just the file's name
           getBasename(helper, config.helpers);
 
-        if (handlebars.helpers[name]) {
-          grunt.log.error(name + ' is already registered, clobbering with the new value. Consider setting `registerFullPath` to true');
-        }
+      if (handlebars.helpers[name] && usedHelpers.indexOf(fullPath) == -1) {
+        grunt.log.error(name + ' is already registered, clobbering with the new value. Consider setting `registerFullPath` to true');
+      }else{
+        usedHelpers.push(fullPath);
+      }
 
         handlebars.registerHelper(name, require(fs.realpathSync(helper)));
     });
 
     partials.forEach(function (partial) {
-        var name = shouldRegisterFullPaths(config.registerFullPath, 'partials') ?
-          // full path, minus extention
-          partial.replace(/\.[^/.]+$/, "") :
-          // just the file's name
+      var fullPath = partial.replace(/\.[^/.]+$/, "");
+      var name = shouldRegisterFullPaths(config.registerFullPath, 'partials') ?
+        // full path, minus extention
+          fullPath :
+        // just the file's name
           getBasename(partial, config.partials);
 
-        if (handlebars.partials[name]) {
-          grunt.log.error(name + ' is already registered, clobbering with the new value. Consider setting `registerFullPath` to true');
-        }
+      if (handlebars.partials[name] && usedPartials.indexOf(fullPath) == -1) {
+        grunt.log.error(name + ' is already registered, clobbering with the new value. Consider setting `registerFullPath` to true');
+      }else{
+        usedPartials.push(fullPath);
+      }
 
       handlebars.registerPartial(name, fs.readFileSync(fs.realpathSync(partial), "utf8"));
     });
