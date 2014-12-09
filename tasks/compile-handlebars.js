@@ -156,7 +156,7 @@ module.exports = function(grunt) {
         // just the file's name
         getBasename(helper, config.helpers);
 
-      if (handlebars.helpers[name] && usedHelpers.indexOf(fullPath) == -1) {
+      if (handlebars.helpers[name] && usedHelpers.indexOf(fullPath) === -1) {
         grunt.log.error(name + ' is already registered, clobbering with the new value. Consider setting `registerFullPath` to true');
       } else {
         usedHelpers.push(fullPath);
@@ -173,7 +173,7 @@ module.exports = function(grunt) {
         // just the file's name
         getBasename(partial, config.partials);
 
-      if (handlebars.partials[name] && usedPartials.indexOf(fullPath) == -1) {
+      if (handlebars.partials[name] && usedPartials.indexOf(fullPath) === -1) {
         grunt.log.error(name + ' is already registered, clobbering with the new value. Consider setting `registerFullPath` to true');
       } else {
         usedPartials.push(fullPath);
