@@ -11,3 +11,4 @@ These people have gone out of their way to add value to this little tool.
 - Anders D. Johnson [github](https://github.com/adjohnson916) [twitter](https://twitter.com/adjohnson916) [website](http://andrz.me)
 - Paul Mason [github](https://github.com/paulmason)
 - Igor Sadovskiy [github](https://github.com/isadovskiy)
+- Gašper Č. [github](https://github.com/gapipro)
