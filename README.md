@@ -175,6 +175,7 @@ the output would be `./foo/bar.html` and `./foo/baz.html`
 I had to work with several hundred repeated data structures that never changed. Keeping them all in html was silly, but pushing out a template engine for the end user to compile the same information multiple times was even sillier. This allows you to have your templated cake and eat it too.
 
 ## Release History
+ * 1.0.1 - Lazy-Eye - @gapipro added path cache for partials and helpers, and fixed using mulitple templates with the same filename
  * 1.0.0 - Serge - Add inline object support for `globals`, fix `outputInInput`
  * 0.7.8 - Eli - add `outputInInput` setting to send outputted files back to their handlebars directory
  * 0.7.7 - Uzi - swap out `JSON.parse` for `alce.parse`, allowing for (technically invalid) single quoted json
