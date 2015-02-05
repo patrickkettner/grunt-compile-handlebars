@@ -197,7 +197,7 @@ When you specify templates using globs, the values from `template` are used to c
 
 and your configuration looks like this
 
-```JSON
+```
 files: [{
     expand: true,
     cwd: './foo/',
