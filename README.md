@@ -34,74 +34,128 @@ Heres a few of the ways you can use it
 
 ```javascript
 'compile-handlebars': {
-    allStatic: {
-      preHTML: 'test/fixtures/pre-dev.html',
-      postHTML: 'test/fixtures/post-dev.html',
-      template: 'test/fixtures/template.handlebars',
-      templateData: 'test/fixtures/data.json',
-      output: 'tmp/allStatic.html'
-    },
-    dynamicTemplate: {
-      template: '<h1>{{salutation}}{{punctuation}} {{location}}</h1>',
-      templateData: 'test/fixtures/data.json',
-      output: 'tmp/dynamicTemplate.html'
-    },
-    dynamicTemplateData: {
-      template: 'test/fixtures/template.handlebars',
-      templateData: {
-          "salutation": "Hallo",
-          "punctuation": ",",
-          "location": "Welt"
-      },
-      output: 'tmp/dynamicTemplateData.html'
-    },
-    dynamicPre: {
-      preHTML: '<header>INLINE HEADER</header>',
-      template: 'test/fixtures/template.handlebars',
-      templateData: 'test/fixtures/data.json',
-      output: 'tmp/dynamicPre.html'
-    },
-    dynamicPost: {
-      postHTML: '<footer>INLINE HEADER</footer>',
-      template: 'test/fixtures/template.handlebars',
-      templateData: 'test/fixtures/data.json',
-      output: 'tmp/dynamicPost.html'
-    },
-    allArray: {
-      template: ['test/fixtures/deep/spanish.handlebars', 'test/fixtures/deep/deeper/portuguese.handlebars'],
-      templateData: ['test/fixtures/deep/deeper/spanish.json', 'test/fixtures/deep/deeper/portuguese.json'],
-      output: ['tmp/deep/spanish.html','tmp/deep/deeper/portuguese.html'],
-      helpers: ['test/helpers/super_helper.js'],
-      partials: ['test/fixtures/deep/shared/foo.handlebars']
-   },
-    globbedTemplateAndOutput: {
-      template: 'test/fixtures/deep/**/*.handlebars',
-      templateData: 'test/fixtures/deep/**/*.json',
-      output: 'tmp/deep/**/*.html'
-    },
-    globalJsonGlobbedTemplate: {
-      template: 'test/fixtures/deep/**/*.handlebars',
-      templateData: 'test/fixtures/deep/**/*.json',
-      output: 'tmp/deep/**/*.html',
-      helpers: 'test/helpers/**/*.js',
-      partials: 'test/fixtures/deep/shared/**/*.handlebars',
-      globals: [
-        'test/globals/info.json',
-        'test/globals/textspec.json',
-        {
-          "textspec": {
-            "ps": "P.S. from Gruntfile.js"
-          }
+  allStatic: {
+    files: [{
+      src: 'test/fixtures/template.handlebars',
+      dest: 'tmp/allStatic.html'
+    }],
+    preHTML: 'test/fixtures/pre-dev.html',
+    postHTML: 'test/fixtures/post-dev.html',
+    templateData: 'test/fixtures/data.json'
+  },
+  dynamicHandlebars: {
+    files: [{
+        src: '<h1></h1>',
+        dest: 'tmp/dynamicHandlebars.html'
+    }],
+    templateData: {},
+    handlebars: 'node_modules/handlebars'
+  },
+  jsonHandlebars: {
+    files: [{
+      src: 'test/fixtures/sweedishTemplate.json',
+      dest: 'tmp/sweedish.json'
+    }],
+    templateData: 'test/fixtures/sweedishData.json'
+  },
+  dynamicTemplate: {
+    files: [{
+        src: '<h1>{{salutation}}{{punctuation}} {{location}}</h1>',
+        dest: 'tmp/dynamicTemplate.html'
+    }],
+    template: '<h1>{{salutation}}{{punctuation}} {{location}}</h1>',
+    templateData: 'test/fixtures/data.json'
+  },
+  dynamicTemplateData: {
+    files: [{
+      src: 'test/fixtures/template.handlebars',
+      dest: 'tmp/dynamicTemplateData.html'
+    }],
+    templateData: {
+      "salutation": "Hallo",
+      "punctuation": ",",
+      "location": "Welt"
+    }
+  },
+  dynamicPre: {
+    files: [{
+      src: 'test/fixtures/template.handlebars',
+      dest: 'tmp/dynamicPre.html'
+    }],
+    preHTML: '<header>INLINE HEADER</header>',
+    templateData: 'test/fixtures/data.json'
+  },
+  dynamicPost: {
+    files: [{
+      src: 'test/fixtures/template.handlebars',
+      dest: 'tmp/dynamicPost.html'
+    }],
+    postHTML: '<footer>INLINE FOOTER</footer>',
+    templateData: 'test/fixtures/data.json'
+  },
+  anyArray: {
+    files: [{
+      src: ['test/fixtures/deep/romanian.handlebars', 'test/fixtures/deep/german.handlebars'],
+      dest: ['tmp/deep/romanian.html','tmp/deep/german.html']
+    }],
+    templateData: ['test/fixtures/deep/romanian.json', 'test/fixtures/deep/german.json'],
+    helpers: ['test/helpers/super_helper.js'],
+    partials: ['test/fixtures/deep/shared/foo.handlebars']
+  },
+  globbedTemplateAndOutput: {
+    files: [{
+        expand: true,
+        cwd: 'test/fixtures/',
+        src: 'deep/**/*.handlebars',
+        dest: 'tmp/',
+        ext: '.html'
+    }],
+    templateData: 'test/fixtures/deep/**/*.json',
+    helpers: 'test/helpers/**/*.js',
+    partials: 'test/fixtures/deep/shared/**/*.handlebars'
+  },
+  globalJsonGlobbedTemplate: {
+    files: [{
+        expand: true,
+        cwd: 'test/fixtures/',
+        src: 'deep/**/*.handlebars',
+        dest: 'tmp/',
+        ext: '.html'
+    }],
+    templateData: 'test/fixtures/deep/**/*.json',
+    helpers: 'test/helpers/**/*.js',
+    partials: 'test/fixtures/deep/shared/**/*.handlebars',
+    globals: [
+      'test/globals/info.json',
+      'test/globals/textspec.json',
+      {
+        textspec: {
+          "ps": "P.S. from Gruntfile.js"
         }
-      ]
+      }
+    ]
+  },
+  registerFullPath: {
+    files: [{
+        src: '<h1>{{salutation}}{{punctuation}} {{location}}</h1>{{> test/fixtures/deep/shared/pathTest}}',
+        dest: 'tmp/fullPath.html'
+    }],
+    templateData: {
+      "salutation": "Hallo",
+      "punctuation": ",",
+      "location": "Welt"
     },
-    customHandlebars: {
-      template: '<h1>{{salutation}}{{punctuation}} {{location}}</h1>',
-      templateData: 'test/fixtures/data.json',
-      output: 'tmp/dynamicTemplate.html',
-      handlebars: 'node_modules/handlebars'
-    },
-}
+    partials: 'test/fixtures/deep/shared/**/*.handlebars',
+    registerFullPath: true
+  },
+  concatGlobbed: {
+    files: [{
+      src: 'test/fixtures/deep/**/*.handlebars',
+      dest: 'tmp/concatGlobbed.html'
+    }],
+    templateData: 'test/fixtures/deep/**/*.json'
+  }
+},
 ```
 
 The available configuration options are as follows
@@ -111,7 +165,7 @@ Unless otherwise noted, all configurable values can be represented as
 * a string representing the path to a [globbed representation](http://gruntjs.com/api/grunt.file#globbing-patterns) of the files, matched up against the values resolved from the `template` configuration
 * an array of literal paths, globbed paths, or a combination of the two
 
-__`template`__ - The template fed to handlebars. In addition to the normal configurable values, it can also be an inline string representation of a template (e.g. raw html and handlebars).
+__`files`__ - A typical [grunt files object](http://gruntjs.com/configuring-tasks#building-the-files-object-dynamically). The `src` are your handlebar templates, the `dest` is your html ouput. See the grunt documentation and the usage examples above for more info on how to use this object.
 
 __`preHTML`__ - Static text to be inserted before the compiled template
 __`postHTML`__ - Static text to be inserted after the compiled template
@@ -120,28 +174,11 @@ __`templateData` ~~ The data being fed to compiled template, in addition to the 
 * an inline string representation of a data (I don't know why you would do that though, when you can do...)
 * an inline JSON representation of a data
 
-__`output`__ - the file(s) that handlebars saves the files to. This can be
-* a string representing the path to a specific file
-* a string representing the path to a [globbed representation](http://gruntjs.com/api/grunt.file#globbing-patterns) of the files.
-* an array of literal paths, globbed paths, or a combination of the two
-
 __`globals`__ - globals that can be included, useful for when you have template specific data, but want some data available to all templates
 __`helpers`__ - handlebars helpers
 __`partials`__ - handlebars partials
 
 __`registerFullPath`__ - normally, helpers and partials are registered under their basename, rather than their path (e.g. partial at `partials/deep/awesomePartial.handlebars` is registered as `{{> awesomePartial}}`). When set to `true`, helpers and partials are registered under their full paths (e.g. {{> partials/deep/awesomePartial}}), to prevent clobbering after resolving globbed values.
-
-__`outputInInput`__ - most of the time, you define your handlebars files in one directory, and want them to be outputted into another directory. However, when you glob your all your files (`./**/*.handlebars`) this just outputs all your files to your root directory. In this case, you can add the boolean `outputInInput` to the configuration, which will output the globbed html into the same folders that the handlebar files are found. e.g, given the following configuraiton
-
-```
-  gottaGlobEmAll: {
-    template: "./**/*.handlebars",
-    templateData: {},
-    output: "./**/*.html"
-  }
-```
-
-`./foo/bar.handlebars` would output to `./bar.html`. By adding `outputInInput: true` to the configuration, it will output to `./foo/bar.html`
 
 `handlebars` - a string representing the path to an instance of handlebars (if you don't want to use the bundeled version).
 Note: This __cannot__ be `require('handlebars')`, as that creates a circular reference. You need to pass the path to the instance you want to use, i.e. `handlebars: "./node_modules/handlebars"`
@@ -161,11 +198,14 @@ When you specify templates using globs, the values from `template` are used to c
 and your configuration looks like this
 
 ```JSON
-{
-  "template": "./foo/*.handlebars",
-  "templateData": "./foo/*.json",
-  "output":  "./foo/*.html"
-}
+files: [{
+    expand: true,
+    cwd: './foo/',
+    src: '*.handlebars',
+    dest: './foo/',
+    ext: '.html'
+}],
+"templateData": "./foo/*.json",
 ```
 
 the output would be `./foo/bar.html` and `./foo/baz.html`
