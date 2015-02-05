@@ -13,16 +13,6 @@ exports.clean = {
 
     test.done();
   },
-  jsonHandlebars: function(test) {
-    test.expect(1);
-
-    var actual   = grunt.file.read('tmp/sweedish.json');
-    var expected = grunt.file.read('test/expected/sweedish.json');
-
-    test.equal(actual, expected, 'json handlebars templates should work');
-
-    test.done();
-  },
   dynamicHandlebars: function(test) {
     test.expect(1);
 
@@ -30,6 +20,16 @@ exports.clean = {
     var expected = grunt.file.read('test/expected/dynamicHandlebars.html');
 
     test.equal(actual, expected, 'Passed reference to handlebars should work');
+
+    test.done();
+  },
+  jsonHandlebars: function(test) {
+    test.expect(1);
+
+    var actual   = grunt.file.read('tmp/sweedish.json');
+    var expected = grunt.file.read('test/expected/sweedish.json');
+
+    test.equal(actual, expected, 'json handlebars templates should work');
 
     test.done();
   },
@@ -99,16 +99,6 @@ exports.clean = {
 
     test.done();
   },
-  helperAndPartial: function (test) {
-    test.expect(1);
-
-    var actual = grunt.file.read('tmp/deep/helperAndPartial.html');
-    var expected = grunt.file.read('test/expected/helperAndPartial.html');
-
-    test.equal(actual, expected, 'Helpers and partials should be corrected renderred');
-
-    test.done();
-  },
   globalJsonGlobbedTemplate: function (test) {
     test.expect(1);
 
@@ -136,6 +126,16 @@ exports.clean = {
     var expected = grunt.file.read('test/expected/concatGlobbed.html');
 
     test.equal(actual, expected, 'Globbed templates should append when output is a singlefile');
+
+    test.done();
+  },
+  helperAndPartial: function (test) {
+    test.expect(1);
+
+    var actual = grunt.file.read('tmp/deep/helperAndPartial.html');
+    var expected = grunt.file.read('test/expected/helperAndPartial.html');
+
+    test.equal(actual, expected, 'Helpers and partials should be corrected renderred');
 
     test.done();
   }
