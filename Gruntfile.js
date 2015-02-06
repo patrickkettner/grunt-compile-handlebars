@@ -150,6 +150,13 @@ module.exports = function(grunt) {
           dest: 'tmp/concatGlobbed.html'
         }],
         templateData: 'test/fixtures/deep/**/*.json'
+      },
+      oneTemplateToManyOutputs: {
+        files: [{
+          src: 'test/fixtures/template.handlebars',
+          dest: ['tmp/oneTemplateToManyOutputs1.html', 'tmp/oneTemplateToManyOutputs2.html']
+        }],
+        templateData: ['test/fixtures/oneTemplateToManyOutputs1.json', 'test/fixtures/oneTemplateToManyOutputs2.json']
       }
     },
 

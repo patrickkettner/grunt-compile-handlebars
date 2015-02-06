@@ -78,25 +78,6 @@ module.exports = function(grunt) {
     return basename.join('.');
   };
 
-  var getName = function(filename, basename, index) {
-    if (Array.isArray(filename)) {
-      var file = filename[index];
-      if (file) return file;
-      grunt.log.error('You need to assign the same number of outputs as you do templates when using array notation.');
-      return;
-    }
-    if (typeof filename === 'object') {
-      return filename;
-    }
-    if (grunt.file.exists(filename)) {
-      return filename;
-    }
-    if (isGlob(filename) !== undefined) {
-      return isGlob(filename) + basename + path.extname(filename);
-    }
-    return filename;
-  };
-
   var mergeJson = function(source, globals) {
     var json = {}, fragment;
 
@@ -225,7 +206,6 @@ module.exports = function(grunt) {
       var template = filepath;
       var compiledTemplate = handlebars.compile(parseData(template, true));
       var templateData = getTemplateData(config.templateData, filepath, index);
-      var basename = path.basename(template);
       var outputPath = getDest(dest, index);
       var appendToFile = ( outputPath === file.orig.dest && grunt.file.exists(outputPath));
       var operation = appendToFile ? 'appendFileSync' : 'writeFileSync';
@@ -236,7 +216,7 @@ module.exports = function(grunt) {
         html += parseData(config.preHTML);
       }
 
-      json = mergeJson(parseData(getName(templateData, basename, index)), config.globals || []);
+      json = mergeJson(parseData(templateData), config.globals || []);
 
 
       html += compiledTemplate(json);
@@ -262,17 +242,26 @@ module.exports = function(grunt) {
     };
 
     files.forEach(function (file) {
-
-      if(file.src.length > 0) {
-        file.src.forEach(function (filepath, index) {
-          doCompilation(file, filepath, index);
-        });
+      if(Array.isArray(file.dest) && file.dest.length > file.src.length) {
+        if (file.src.length > 1) {
+          grunt.log.error('You may only have one source file when there are more destination files than source files.');
+          return;
+        } else {
+          file.dest.forEach(function (destpath, index) {
+            doCompilation(file, file.src[0], index);
+          });
+        }
       } else {
-        file.orig.src.forEach(function (template, index) {
-          doCompilation(file, template, index);
-        });
+        if(file.src.length > 0) {
+          file.src.forEach(function (filepath, index) {
+            doCompilation(file, filepath, index);
+          });
+        } else {
+          file.orig.src.forEach(function (template, index) {
+            doCompilation(file, template, index);
+          });
+        }
       }
-
     });
 
     process.nextTick(done);
