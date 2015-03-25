@@ -198,6 +198,8 @@ module.exports = function(grunt) {
         html += parseData(getName(config.postHTML, basename, index));
       }
 
+      html = html.replace(/\&lt;a/g, '<a').replace(/\href=&#x27;/g, 'href="').replace(/\&#x27;&gt;/g, '">').replace(/\&lt;/g, '<').replace(/\&gt;/g, '>');
+
       grunt.file.write(getName(config.output, outputBasename, index), html);
     });
 
