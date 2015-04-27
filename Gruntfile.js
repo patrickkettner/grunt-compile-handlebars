@@ -31,67 +31,94 @@ module.exports = function(grunt) {
     // Configuration to be run (and then tested).
     'compile-handlebars': {
       allStatic: {
+        files: [{
+          src: 'test/fixtures/template.handlebars',
+          dest: 'tmp/allStatic.html'
+        }],
         preHTML: 'test/fixtures/pre-dev.html',
         postHTML: 'test/fixtures/post-dev.html',
-        template: 'test/fixtures/template.handlebars',
-        templateData: 'test/fixtures/data.json',
-        output: 'tmp/allStatic.html'
+        templateData: 'test/fixtures/data.json'
       },
       dynamicHandlebars: {
-        template: '<h1></h1>',
+        files: [{
+            src: '<h1></h1>',
+            dest: 'tmp/dynamicHandlebars.html'
+        }],
         templateData: {},
-        output: 'tmp/dynamicHandlebars.html',
         handlebars: 'node_modules/handlebars'
       },
       jsonHandlebars: {
-        template: 'test/fixtures/sweedishTemplate.json',
-        templateData: 'test/fixtures/sweedishData.json',
-        output: 'tmp/sweedish.json'
+        files: [{
+          src: 'test/fixtures/sweedishTemplate.json',
+          dest: 'tmp/sweedish.json'
+        }],
+        templateData: 'test/fixtures/sweedishData.json'
       },
       dynamicTemplate: {
+        files: [{
+            src: '<h1>{{salutation}}{{punctuation}} {{location}}</h1>',
+            dest: 'tmp/dynamicTemplate.html'
+        }],
         template: '<h1>{{salutation}}{{punctuation}} {{location}}</h1>',
-        templateData: 'test/fixtures/data.json',
-        output: 'tmp/dynamicTemplate.html'
+        templateData: 'test/fixtures/data.json'
       },
       dynamicTemplateData: {
-        template: 'test/fixtures/template.handlebars',
+        files: [{
+          src: 'test/fixtures/template.handlebars',
+          dest: 'tmp/dynamicTemplateData.html'
+        }],
         templateData: {
           "salutation": "Hallo",
           "punctuation": ",",
           "location": "Welt"
-        },
-        output: 'tmp/dynamicTemplateData.html'
+        }
       },
       dynamicPre: {
+        files: [{
+          src: 'test/fixtures/template.handlebars',
+          dest: 'tmp/dynamicPre.html'
+        }],
         preHTML: '<header>INLINE HEADER</header>',
-        template: 'test/fixtures/template.handlebars',
-        templateData: 'test/fixtures/data.json',
-        output: 'tmp/dynamicPre.html'
+        templateData: 'test/fixtures/data.json'
       },
       dynamicPost: {
-        postHTML: '<footer>INLINE HEADER</footer>',
-        template: 'test/fixtures/template.handlebars',
-        templateData: 'test/fixtures/data.json',
-        output: 'tmp/dynamicPost.html'
+        files: [{
+          src: 'test/fixtures/template.handlebars',
+          dest: 'tmp/dynamicPost.html'
+        }],
+        postHTML: '<footer>INLINE FOOTER</footer>',
+        templateData: 'test/fixtures/data.json'
       },
       anyArray: {
-        template: ['test/fixtures/deep/romanian.handlebars', 'test/fixtures/deep/german.handlebars'],
+        files: [{
+          src: ['test/fixtures/deep/romanian.handlebars', 'test/fixtures/deep/german.handlebars'],
+          dest: ['tmp/deep/romanian.html','tmp/deep/german.html']
+        }],
         templateData: ['test/fixtures/deep/romanian.json', 'test/fixtures/deep/german.json'],
-        output: ['tmp/deep/romanian.html','tmp/deep/german.html'],
         helpers: ['test/helpers/super_helper.js'],
         partials: ['test/fixtures/deep/shared/foo.handlebars']
       },
       globbedTemplateAndOutput: {
-        template: 'test/fixtures/deep/**/*.handlebars',
+        files: [{
+            expand: true,
+            cwd: 'test/fixtures/',
+            src: 'deep/**/*.handlebars',
+            dest: 'tmp/',
+            ext: '.html'
+        }],
         templateData: 'test/fixtures/deep/**/*.json',
-        output: 'tmp/deep/**/*.html',
         helpers: 'test/helpers/**/*.js',
         partials: 'test/fixtures/deep/shared/**/*.handlebars'
       },
       globalJsonGlobbedTemplate: {
-        template: 'test/fixtures/deep/**/*.handlebars',
+        files: [{
+            expand: true,
+            cwd: 'test/fixtures/',
+            src: 'deep/**/*.handlebars',
+            dest: 'tmp/',
+            ext: '.html'
+        }],
         templateData: 'test/fixtures/deep/**/*.json',
-        output: 'tmp/deep/**/*.html',
         helpers: 'test/helpers/**/*.js',
         partials: 'test/fixtures/deep/shared/**/*.handlebars',
         globals: [
@@ -105,20 +132,31 @@ module.exports = function(grunt) {
         ]
       },
       registerFullPath: {
-        template: '<h1>{{salutation}}{{punctuation}} {{location}}</h1>{{> test/fixtures/deep/shared/pathTest}}',
+        files: [{
+            src: '<h1>{{salutation}}{{punctuation}} {{location}}</h1>{{> test/fixtures/deep/shared/pathTest}}',
+            dest: 'tmp/fullPath.html'
+        }],
         templateData: {
           "salutation": "Hallo",
           "punctuation": ",",
           "location": "Welt"
         },
-        output: 'tmp/fullPath.html',
         partials: 'test/fixtures/deep/shared/**/*.handlebars',
         registerFullPath: true
       },
       concatGlobbed: {
-        template: 'test/fixtures/deep/**/*.handlebars',
-        templateData: 'test/fixtures/deep/**/*.json',
-        output: 'tmp/concatGlobbed.html'
+        files: [{
+          src: 'test/fixtures/deep/**/*.handlebars',
+          dest: 'tmp/concatGlobbed.html'
+        }],
+        templateData: 'test/fixtures/deep/**/*.json'
+      },
+      oneTemplateToManyOutputs: {
+        files: [{
+          src: 'test/fixtures/template.handlebars',
+          dest: ['tmp/oneTemplateToManyOutputs1.html', 'tmp/oneTemplateToManyOutputs2.html']
+        }],
+        templateData: ['test/fixtures/oneTemplateToManyOutputs1.json', 'test/fixtures/oneTemplateToManyOutputs2.json']
       }
     },
 

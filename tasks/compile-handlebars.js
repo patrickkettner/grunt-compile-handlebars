@@ -28,7 +28,7 @@ module.exports = function(grunt) {
     return [config];
   };
 
-  // Gets the final representation of the input, wether it be object, or string
+  // Gets the final representation of the input, whether it be object, or string
   var parseData = function(data, dontParse) {
     // grunt.file chokes on objects, so we check for it immiedietly
     if (typeof data === 'object') {
@@ -50,7 +50,7 @@ module.exports = function(grunt) {
 
   // Checks if the input is a glob and if so, returns the unglobbed version of the filename
   var isGlob = function(filename) {
-    if (!filename) return;
+    if (!filename || typeof filename === 'object') return;
     var match = filename.match(/[^\*]*/);
     if (match[0] !== filename) {
       return match.pop();
@@ -76,25 +76,6 @@ module.exports = function(grunt) {
       basename.pop();
     }
     return basename.join('.');
-  };
-
-  var getName = function(filename, basename, index) {
-    if (Array.isArray(filename)) {
-      var file = filename[index];
-      if (file) return file;
-      grunt.log.error('You need to assign the same number of ouputs as you do templates when using array notation.');
-      return;
-    }
-    if (typeof filename === 'object') {
-      return filename;
-    }
-    if (grunt.file.exists(filename)) {
-      return filename;
-    }
-    if (isGlob(filename) !== undefined) {
-      return isGlob(filename) + basename + path.extname(filename);
-    }
-    return filename;
   };
 
   var mergeJson = function(source, globals) {
@@ -134,25 +115,53 @@ module.exports = function(grunt) {
     return itShould;
   };
 
-  var getTemplates = function(templatesConfig){
-    if(Array.isArray(templatesConfig)){
-      return [].concat.apply([], templatesConfig.map(function (template) {
-        return getConfig(template);
-      }));
-    } else {
-      return getConfig(templatesConfig);
+  var getTemplateData = function (templateData, filepath, index) {
+    var data;
+    if (Array.isArray(templateData)) {
+      data = templateData[index];
+      if (data) return data;
+      grunt.log.error('You need to assign the same number of data files as source files when using array notation.');
+      return;
     }
+    if (typeof templateData === 'object') {
+      return templateData;
+    }
+    if (grunt.file.exists(templateData)) {
+      return templateData;
+    }
+    if (isGlob(templateData) !== undefined) {
+      data = filepath.replace(path.extname(filepath), path.extname(templateData));
+      if (data) return data;
+      grunt.log.error('No matching data file for '+filepath+'.');
+      return;
+    }
+    return templateData;
+  };
+
+  var getDest = function (destConfig, index) {
+    var dest;
+    if (Array.isArray(destConfig)) {
+      dest = destConfig[index];
+      if (dest) return dest;
+      grunt.log.error('You need to assign the same number of destination files as source files when using array notation.');
+      return;
+    }
+    if (isGlob(destConfig) !== undefined) {
+      dest = grunt.file.expand(destConfig)[index];
+      if (dest) return dest;
+      grunt.log.error('You need to assign the same number of destination files as source files when using glob notation.');
+      return;
+    }
+    return destConfig;
   };
 
   grunt.registerMultiTask('compile-handlebars', 'Compile Handlebars templates ', function() {
     var fs = require('fs');
     var path = require('path');
+    var files = this.files;
     var config = this.data;
-    var templates = getTemplates(config.template);
-    var templateData = config.templateData;
     var helpers = getConfig(config.helpers);
     var partials = getConfig(config.partials);
-    var outputInInput = config.outputInInput === true;
     var done = this.async();
 
     handlebarsPath = config.handlebars ? path.resolve(config.handlebars) : 'handlebars';
@@ -166,7 +175,7 @@ module.exports = function(grunt) {
         // just the file's name
           getBasename(helper, config.helpers);
 
-      if (handlebars.helpers[name] && usedHelpers.indexOf(fullPath) == -1) {
+      if (handlebars.helpers[name] && usedHelpers.indexOf(fullPath) === -1) {
         grunt.log.error(name + ' is already registered, clobbering with the new value. Consider setting `registerFullPath` to true');
       } else {
         usedHelpers.push(fullPath);
@@ -183,7 +192,7 @@ module.exports = function(grunt) {
         // just the file's name
           getBasename(partial, config.partials);
 
-      if (handlebars.partials[name] && usedPartials.indexOf(fullPath) == -1) {
+      if (handlebars.partials[name] && usedPartials.indexOf(fullPath) === -1) {
         grunt.log.error(name + ' is already registered, clobbering with the new value. Consider setting `registerFullPath` to true');
       } else {
         usedPartials.push(fullPath);
@@ -192,26 +201,28 @@ module.exports = function(grunt) {
       handlebars.registerPartial(name, fs.readFileSync(fs.realpathSync(partial), "utf8"));
     });
 
-    templates.forEach(function(template, index) {
+    var doCompilation = function (file, filepath, index) {
+      var dest = file.dest || "";
+      var template = filepath;
       var compiledTemplate = handlebars.compile(parseData(template, true));
-      var basename = getBasename(template, config.template);
-      var outputBasename = getBasename(template, config.template, outputInInput);
-      var outputPath = getName(config.output, basename, index);
-      var appendToFile = (index !== 0) && (Array.isArray(config.template) || !!isGlob(config.template)) && (config.output === outputPath);
+      var templateData = getTemplateData(config.templateData, filepath, index);
+      var outputPath = getDest(dest, index);
+      var appendToFile = ( outputPath === file.orig.dest && grunt.file.exists(outputPath));
       var operation = appendToFile ? 'appendFileSync' : 'writeFileSync';
       var html = '';
       var json;
 
       if (config.preHTML) {
-        html += parseData(getName(config.preHTML, basename, index));
+        html += parseData(config.preHTML);
       }
 
-      json = mergeJson(parseData(getName(templateData, basename, index)), config.globals || []);
+      json = mergeJson(parseData(templateData), config.globals || []);
+
 
       html += compiledTemplate(json);
 
       if (config.postHTML) {
-        html += parseData(getName(config.postHTML, basename, index));
+        html += parseData(config.postHTML);
       }
 
 
@@ -220,12 +231,36 @@ module.exports = function(grunt) {
       grunt.file.mkdir(path.dirname(outputPath));
 
       try {
-        fs[operation](getName(config.output, outputBasename, index), html);
+        fs[operation](outputPath, html);
         grunt.verbose.ok();
         return true;
       } catch(e) {
         grunt.verbose.error();
         throw grunt.util.error('Unable to write "' + outputPath + '" file (Error code: ' + e.code + ').', e);
+      }
+
+    };
+
+    files.forEach(function (file) {
+      if(Array.isArray(file.dest) && file.dest.length > file.src.length) {
+        if (file.src.length > 1) {
+          grunt.log.error('You may only have one source file when there are more destination files than source files.');
+          return;
+        } else {
+          file.dest.forEach(function (destpath, index) {
+            doCompilation(file, file.src[0], index);
+          });
+        }
+      } else {
+        if(file.src.length > 0) {
+          file.src.forEach(function (filepath, index) {
+            doCompilation(file, filepath, index);
+          });
+        } else {
+          file.orig.src.forEach(function (template, index) {
+            doCompilation(file, template, index);
+          });
+        }
       }
     });
 

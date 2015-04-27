@@ -13,16 +13,6 @@ exports.clean = {
 
     test.done();
   },
-  jsonHandlebars: function(test) {
-    test.expect(1);
-
-    var actual   = grunt.file.read('tmp/sweedish.json');
-    var expected = grunt.file.read('test/expected/sweedish.json');
-
-    test.equal(actual, expected, 'json handlebars templates should work');
-
-    test.done();
-  },
   dynamicHandlebars: function(test) {
     test.expect(1);
 
@@ -30,6 +20,16 @@ exports.clean = {
     var expected = grunt.file.read('test/expected/dynamicHandlebars.html');
 
     test.equal(actual, expected, 'Passed reference to handlebars should work');
+
+    test.done();
+  },
+  jsonHandlebars: function(test) {
+    test.expect(1);
+
+    var actual   = grunt.file.read('tmp/sweedish.json');
+    var expected = grunt.file.read('test/expected/sweedish.json');
+
+    test.equal(actual, expected, 'json handlebars templates should work');
 
     test.done();
   },
@@ -99,16 +99,6 @@ exports.clean = {
 
     test.done();
   },
-  helperAndPartial: function (test) {
-    test.expect(1);
-
-    var actual = grunt.file.read('tmp/deep/helperAndPartial.html');
-    var expected = grunt.file.read('test/expected/helperAndPartial.html');
-
-    test.equal(actual, expected, 'Helpers and partials should be corrected renderred');
-
-    test.done();
-  },
   globalJsonGlobbedTemplate: function (test) {
     test.expect(1);
 
@@ -135,7 +125,31 @@ exports.clean = {
     var actual = grunt.file.read('tmp/concatGlobbed.html');
     var expected = grunt.file.read('test/expected/concatGlobbed.html');
 
-    test.equal(actual, expected, 'Globbed templates should append when output is a singlefile');
+    test.equal(actual, expected, 'Globbed templates should append when output is a single file');
+
+    test.done();
+  },
+  oneTemplateToManyOutputs: function (test) {
+    test.expect(2);
+
+    var actual1 = grunt.file.read('tmp/oneTemplateToManyOutputs1.html');
+    var expected1 = grunt.file.read('test/expected/oneTemplateToManyOutputs1.html');
+
+    var actual2 = grunt.file.read('tmp/oneTemplateToManyOutputs2.html');
+    var expected2= grunt.file.read('test/expected/oneTemplateToManyOutputs2.html');
+
+    test.equal(actual1, expected1, 'Output should use same template but different data when it is a single file');
+    test.equal(actual2, expected2, 'Output should use same template but different data when it is a single file');
+
+    test.done();
+  },
+  helperAndPartial: function (test) {
+    test.expect(1);
+
+    var actual = grunt.file.read('tmp/deep/helperAndPartial.html');
+    var expected = grunt.file.read('test/expected/helperAndPartial.html');
+
+    test.equal(actual, expected, 'Helpers and partials should be corrected renderred');
 
     test.done();
   }
