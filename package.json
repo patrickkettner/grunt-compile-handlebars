@@ -41,8 +41,8 @@
   "dependencies": {
     "alce": "^1.0.0",
     "handlebars": ">= 1",
-    "lodash.merge": ">= 2",
-    "lodash.toarray": ">=2"
+    "lodash.merge": "^3.0.0",
+    "lodash.toarray": "^3.0.0"
   },
   "keywords": [
     "gruntplugin",
