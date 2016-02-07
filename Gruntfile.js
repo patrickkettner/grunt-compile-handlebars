@@ -131,6 +131,27 @@ module.exports = function(grunt) {
           }
         ]
       },
+      globalJsonGlobbedTemplateSeparateLocations: {
+        files: [{
+            expand: true,
+            cwd: 'test/fixtures/',
+            src: 'deepSeparateHbs/**/*.handlebars',
+            dest: 'tmp/',
+            ext: '.html'
+        }],
+        templateData: 'test/fixtures/deepSeparate/**/*.json',
+        helpers: 'test/helpers/**/*.js',
+        partials: 'test/fixtures/deep/shared/**/*.handlebars',
+        globals: [
+          'test/globals/info.json',
+          'test/globals/textspec.json',
+          {
+            textspec: {
+              "ps": "P.S. from Gruntfile.js"
+            }
+          }
+        ]
+      },
       registerFullPath: {
         files: [{
             src: '<h1>{{salutation}}{{punctuation}} {{location}}</h1>{{> test/fixtures/deep/shared/pathTest}}',
