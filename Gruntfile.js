@@ -139,7 +139,7 @@ module.exports = function(grunt) {
             dest: 'tmp/',
             ext: '.html'
         }],
-        templateData: 'test/fixtures/deepSeparate/**/*.json',
+        templateData: 'test/fixtures/deepSeparateJson/**/*.json',
         helpers: 'test/helpers/**/*.js',
         partials: 'test/fixtures/deep/shared/**/*.handlebars',
         globals: [
