@@ -123,7 +123,7 @@ module.exports = function(grunt) {
     return itShould;
   };
 
-  var getTemplateData = function(templateData, filepath, index) {
+  var getTemplateData = function(templateData, filepath, index, file) {
     var data;
     if (templateData === undefined) {
       return {};
@@ -145,12 +145,47 @@ module.exports = function(grunt) {
       return templateData;
     }
     if (isGlob(templateData) !== undefined) {
-      data = filepath.replace(path.extname(filepath), path.extname(templateData));
+      var templateExt = path.extname(filepath);
+      var hbsPath;
+
+      (file.orig.src || []).some(function(src) {
+        var globRoot = isGlob(path.join(file.orig.cwd || '', src));
+
+        if (globRoot === undefined) {
+          return false;
+        }
+
+        var normalizedPath = path.normalize(filepath);
+        globRoot = path.normalize(globRoot);
+
+        if (normalizedPath.indexOf(globRoot) === 0) {
+          hbsPath = normalizedPath.slice(globRoot.length, normalizedPath.length - templateExt.length);
+          return true;
+        }
+
+        return false;
+      });
+
+      if (hbsPath !== undefined) {
+        grunt.file.expand(templateData).forEach(function(d) {
+          var jsonPath = path.normalize(d).replace(path.normalize(isGlob(templateData)), '');
+          jsonPath = jsonPath.slice(0, jsonPath.length - path.extname(d).length);
+
+          if (hbsPath === jsonPath) {
+            data = d;
+          }
+        });
+      }
+
       if (data) {
         return data;
       }
 
-      return grunt.log.error('No matching data file for ' + filepath + '.');
+      // no glob match, so fall back to swapping the extension, as before v2.1
+      data = filepath.replace(path.extname(filepath), path.extname(templateData));
+      if (data) {
+        return data;
+      }
     }
 
     return templateData;
@@ -228,7 +263,7 @@ module.exports = function(grunt) {
       var dest = file.dest || '';
       var template = filepath;
       var compiledTemplate = handlebars.compile(parseData(template, true), options);
-      var templateData = getTemplateData(config.templateData, filepath, index);
+      var templateData = getTemplateData(config.templateData, filepath, index, file);
       var outputPath = getDest(dest, index);
       var appendToFile = (outputPath === file.orig.dest && grunt.file.exists(outputPath));
       var operation = appendToFile ? 'appendFileSync' : 'writeFileSync';
