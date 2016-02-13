@@ -125,6 +125,9 @@ module.exports = function(grunt) {
 
   var getTemplateData = function(templateData, filepath, index) {
     var data;
+    if (typeof templateData === 'function') {
+      return getTemplateData(templateData(), filepath, index);
+    }
     if (Array.isArray(templateData)) {
       data = templateData[index];
       if (data) {
