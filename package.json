@@ -36,7 +36,7 @@
     "grunt": "~0.4.0"
   },
   "peerDependencies": {
-    "grunt": "~0.4.0"
+    "grunt": ">=0.4.0"
   },
   "dependencies": {
     "alce": "^1.0.0",
