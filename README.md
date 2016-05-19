@@ -222,6 +222,7 @@ the output would be `./foo/bar.html` and `./foo/baz.html`
 I had to work with several hundred repeated data structures that never changed. Keeping them all in html was silly, but pushing out a template engine for the end user to compile the same information multiple times was even sillier. This allows you to have your templated cake and eat it too.
 
 ## Release History
+ * 2.0.2 - Gadge - fixup Grunt PeerDeps requirement for 1.0 compatibility, have templateData return an empty object when omitted
  * 2.0.1 - Candy - @jrylander updated the lodash dependency to fix breakages introduced in lodash v4
  * 2.0.0 - Jed - @timhettler rewrote larges swaths of the task to use the [Grunt file object](http://gruntjs.com/configuring-tasks#files-object-format)
  * 1.0.1 - Lazy-Eye - @gapipro added path cache for partials and helpers, and fixed using mulitple templates with the same filename
