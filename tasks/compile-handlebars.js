@@ -123,7 +123,7 @@ module.exports = function(grunt) {
     return itShould;
   };
 
-  var getTemplateData = function(templateData, filepath, index) {
+  var getTemplateData = function(templateData, filepath, index, file) {
     var data;
     if (templateData === undefined) {
       return {};
@@ -145,7 +145,15 @@ module.exports = function(grunt) {
       return templateData;
     }
     if (isGlob(templateData) !== undefined) {
-      data = filepath.replace(path.extname(filepath), path.extname(templateData));
+      var hbsPath = (filepath.replace(isGlob(((file.orig.cwd === undefined) ? '' : file.orig.cwd) + file.orig.src[0]), '')).replace(path.extname(filepath), '');
+
+      grunt.file.expand(templateData).forEach(function(d, i){
+        var jsonPath = (d.replace(isGlob(templateData), '')).replace(path.extname(templateData), '');
+        if(hbsPath === jsonPath){
+          data = d;
+        }
+      });
+
       if (data) {
         return data;
       }
@@ -227,9 +235,9 @@ module.exports = function(grunt) {
       var dest = file.dest || '';
       var template = filepath;
       var compiledTemplate = handlebars.compile(parseData(template, true));
-      var templateData = getTemplateData(config.templateData, filepath, index);
+      var templateData = getTemplateData(config.templateData, filepath, index, file);
       var outputPath = getDest(dest, index);
-      var appendToFile = (outputPath === file.orig.dest && grunt.file.exists(outputPath));
+      var appendToFile = config.append && (outputPath === file.orig.dest && grunt.file.exists(outputPath));
       var operation = appendToFile ? 'appendFileSync' : 'writeFileSync';
       var html = '';
       var json;

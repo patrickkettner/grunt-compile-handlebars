@@ -40,7 +40,7 @@
   },
   "dependencies": {
     "alce": "^1.0.0",
-    "handlebars": ">= 1",
+    "handlebars": ">= 4",
     "lodash.merge": "^3.0.0",
     "lodash.toarray": "^3.0.0"
   },
