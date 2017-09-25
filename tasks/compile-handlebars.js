@@ -237,7 +237,7 @@ module.exports = function(grunt) {
       var compiledTemplate = handlebars.compile(parseData(template, true));
       var templateData = getTemplateData(config.templateData, filepath, index, file);
       var outputPath = getDest(dest, index);
-      var appendToFile = (outputPath === file.orig.dest && grunt.file.exists(outputPath));
+      var appendToFile = config.append && (outputPath === file.orig.dest && grunt.file.exists(outputPath));
       var operation = appendToFile ? 'appendFileSync' : 'writeFileSync';
       var html = '';
       var json;
