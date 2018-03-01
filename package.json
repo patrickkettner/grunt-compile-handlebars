@@ -1,5 +1,5 @@
 {
-  "name": "grunt-compile-handlebars",
+  "name": "2t-compile-handlebars",
   "description": "Compile handlebar templates, outputting static HTML",
   "version": "2.0.3",
   "homepage": "https://github.com/euphreme/grunt-compile-handlebars",
@@ -30,10 +30,10 @@
     "test": "grunt test"
   },
   "devDependencies": {
-    "grunt-contrib-jshint": "~0.2.0",
+    "grunt": "~0.4.0",
     "grunt-contrib-clean": "~0.4.0",
-    "grunt-contrib-nodeunit": "~0.1.2",
-    "grunt": "~0.4.0"
+    "grunt-contrib-jshint": "~0.2.0",
+    "grunt-contrib-nodeunit": "^0.1.2"
   },
   "peerDependencies": {
     "grunt": ">=0.4.0"
