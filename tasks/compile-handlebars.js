@@ -10,7 +10,7 @@
 
 module.exports = function(grunt) {
   var _merge = require('lodash.merge');
-  var _toArray = require('lodash.toarray');
+  var _toArray = require('lodash/array');
   var alce = require('alce');
   var path = require('path');
   var handlebarsPath;

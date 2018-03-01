@@ -23,26 +23,23 @@
   ],
   "main": "grunt.js",
   "bin": "bin/grunt-compile-handlebars",
-  "engines": {
-    "node": "*>= 0.8.0"
-  },
   "scripts": {
     "test": "grunt test"
   },
   "devDependencies": {
-    "grunt": "~0.4.0",
-    "grunt-contrib-clean": "~0.4.0",
-    "grunt-contrib-jshint": "~0.2.0",
-    "grunt-contrib-nodeunit": "^0.1.2"
+    "grunt": "^1.0.2",
+    "grunt-contrib-clean": "^1.1.0",
+    "grunt-contrib-jshint": "^1.1.0",
+    "grunt-contrib-nodeunit": "^1.0.0"
   },
   "peerDependencies": {
-    "grunt": ">=0.4.0"
+    "grunt": ">=1.0.2"
   },
   "dependencies": {
-    "alce": "^1.0.0",
-    "handlebars": ">= 1",
-    "lodash.merge": "^3.0.0",
-    "lodash.toarray": "^3.0.0"
+    "alce": "^1.2.0",
+    "handlebars": "^4.0.11",
+    "lodash.merge": "^4.6.1",
+    "lodash": "^4.17.5"
   },
   "keywords": [
     "gruntplugin",
