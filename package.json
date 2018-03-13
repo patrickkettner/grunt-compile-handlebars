@@ -1,5 +1,5 @@
 {
-  "name": "2t-compile-handlebars",
+  "name": "grunt-compile-handlebars",
   "description": "Compile handlebar templates, outputting static HTML",
   "version": "2.0.3",
   "homepage": "https://github.com/euphreme/grunt-compile-handlebars",
@@ -23,6 +23,9 @@
   ],
   "main": "grunt.js",
   "bin": "bin/grunt-compile-handlebars",
+  "engines": {
+    "node": "*>= 0.8.0"
+  },
   "scripts": {
     "test": "grunt test"
   },
