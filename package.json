@@ -2,23 +2,23 @@
   "name": "grunt-compile-handlebars",
   "description": "Compile handlebar templates, outputting static HTML",
   "version": "2.0.3",
-  "homepage": "https://github.com/euphreme/grunt-compile-handlebars",
+  "homepage": "https://github.com/patrickkettner/grunt-compile-handlebars",
   "author": {
-    "name": "Pascal Lalonde",
-    "email": "pascal.lalonde@gmail.com",
-    "url": "https://github.com/euphreme"
+    "name": "Patrick Kettner",
+    "email": "patrick@patrickkettner.com",
+    "url": "https://github.com/patrickkettner"
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/euphreme/grunt-compile-handlebars.git"
+    "url": "git://github.com/patrickkettner/grunt-compile-handlebars.git"
   },
   "bugs": {
-    "url": "https://github.com/euphreme/grunt-compile-handlebars/issues"
+    "url": "https://github.com/patrickkettner/grunt-compile-handlebars/issues"
   },
   "licenses": [
     {
       "type": "MIT",
-      "url": "https://github.com/euphreme/grunt-compile-handlebars/blob/master/LICENSE-MIT"
+      "url": "https://github.com/patrickkettner/grunt-compile-handlebars/blob/master/LICENSE-MIT"
     }
   ],
   "main": "grunt.js",
