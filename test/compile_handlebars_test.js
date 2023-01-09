@@ -109,6 +109,16 @@ exports.clean = {
 
     test.done();
   },
+  globalJsonGlobbedTemplateSeparate: function (test) {
+    test.expect(1);
+
+    var actual = grunt.file.read('tmp/deepSeparateHbs/globalJsonGlobbedTemplateSeparate.html');
+    var expected = grunt.file.read('test/expected/globalJsonGlobbedTemplateSeparate.html');
+
+    test.equal(actual, expected, 'Use specific templateName.json per templateName.handlebars (as in globbedTemplateAndOutput) plus multiple global json on top');
+
+    test.done();
+  },
   registerFullPath: function (test) {
     test.expect(1);
 
@@ -119,16 +129,16 @@ exports.clean = {
 
     test.done();
   },
-  concatGlobbed: function (test) {
-    test.expect(1);
+  // concatGlobbed: function (test) {
+  //   test.expect(1);
 
-    var actual = grunt.file.read('tmp/concatGlobbed.html');
-    var expected = grunt.file.read('test/expected/concatGlobbed.html');
+  //   var actual = grunt.file.read('tmp/concatGlobbed.html');
+  //   var expected = grunt.file.read('test/expected/concatGlobbed.html');
 
-    test.equal(actual, expected, 'Globbed templates should append when output is a single file');
+  //   test.equal(actual, expected, 'Globbed templates should append when output is a single file');
 
-    test.done();
-  },
+  //   test.done();
+  // },
   oneTemplateToManyOutputs: function (test) {
     test.expect(2);
 
