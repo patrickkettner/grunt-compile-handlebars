@@ -184,6 +184,7 @@ module.exports = function(grunt) {
     var config = this.data;
     var helpers = getConfig(config.helpers);
     var partials = getConfig(config.partials);
+    var options = this.options();
     var done = this.async();
 
     handlebarsPath = config.handlebars ? path.resolve(config.handlebars) : 'handlebars';
@@ -226,7 +227,7 @@ module.exports = function(grunt) {
     var compile = function(file, filepath, index) {
       var dest = file.dest || '';
       var template = filepath;
-      var compiledTemplate = handlebars.compile(parseData(template, true));
+      var compiledTemplate = handlebars.compile(parseData(template, true), options);
       var templateData = getTemplateData(config.templateData, filepath, index);
       var outputPath = getDest(dest, index);
       var appendToFile = (outputPath === file.orig.dest && grunt.file.exists(outputPath));
