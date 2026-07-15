@@ -228,6 +228,17 @@ module.exports = function(grunt) {
     handlebarsPath = config.handlebars ? path.resolve(config.handlebars) : 'handlebars';
     handlebars = require(handlebarsPath);
 
+    if (config.isolated) {
+      if (typeof handlebars.create !== 'function') {
+        grunt.log.error('`isolated` needs a handlebars with .create() (1.0.9 or newer), continuing with the shared environment');
+      } else {
+        // give this target its own handlebars environment, so partials and
+        // helpers registered by earlier targets are not visible to it, and
+        // whatever it registers is not visible to later targets
+        handlebars = handlebars.create();
+      }
+    }
+
     helpers.forEach(function(helper) {
       var fullPath = helper.replace(/\.[^/.]+$/, '');
       var name = shouldRegisterFullPaths(config.registerFullPath, 'helpers') ?
@@ -238,7 +249,7 @@ module.exports = function(grunt) {
 
       if (handlebars.helpers[name] && usedHelpers.indexOf(fullPath) === -1) {
         grunt.log.error(name + ' is already registered, clobbering with the new value. Consider setting `registerFullPath` to true');
-      } else {
+      } else if (!config.isolated) {
         usedHelpers.push(fullPath);
       }
 
@@ -255,7 +266,7 @@ module.exports = function(grunt) {
 
       if (handlebars.partials[name] && usedPartials.indexOf(fullPath) === -1) {
         grunt.log.error(name + ' is already registered, clobbering with the new value. Consider setting `registerFullPath` to true');
-      } else {
+      } else if (!config.isolated) {
         usedPartials.push(fullPath);
       }
 

@@ -192,6 +192,29 @@ module.exports = function(grunt) {
         }],
         templateData: 'test/fixtures/*.json'
       },
+      helperIsolationA: {
+        files: [{
+          src: '<i>{{leaked}}</i>',
+          dest: 'tmp/helperIsolationA.html'
+        }],
+        templateData: {},
+        helpers: ['test/probe-helpers/leaked.js']
+      },
+      helperIsolationB: {
+        files: [{
+          src: '<i>{{leaked}}</i>',
+          dest: 'tmp/helperIsolationB.html'
+        }],
+        templateData: {},
+        isolated: true
+      },
+      helperIsolationC: {
+        files: [{
+          src: '<i>{{leaked}}</i>',
+          dest: 'tmp/helperIsolationC.html'
+        }],
+        templateData: {}
+      },
       registerFullPath: {
         files: [{
             src: '<h1>{{salutation}}{{punctuation}} {{location}}</h1>{{> test/fixtures/deep/shared/pathTest}}',

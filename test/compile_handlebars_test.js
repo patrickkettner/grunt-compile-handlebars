@@ -213,6 +213,15 @@ exports.clean = {
 
     test.done();
   },
+  helperIsolation: function(test) {
+    test.expect(3);
+
+    test.equal(grunt.file.read('tmp/helperIsolationA.html'), '<i>LEAKED</i>', 'A target should see its own helpers.');
+    test.equal(grunt.file.read('tmp/helperIsolationB.html'), '<i></i>', 'An isolated target should not see helpers registered by earlier targets.');
+    test.equal(grunt.file.read('tmp/helperIsolationC.html'), '<i>LEAKED</i>', 'A non-isolated target should still see helpers registered by earlier targets.');
+
+    test.done();
+  },
   iterateArray: function(test) {
     test.expect(2);
 

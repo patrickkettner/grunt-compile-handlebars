@@ -199,6 +199,8 @@ posts: {
 }
 ```
 
+__`isolated`__ - when `true`, the target gets its own handlebars environment. Normally all targets in a run share one, so partials and helpers registered by an earlier target are still registered (and can collide) in later ones; an isolated target starts clean and leaks nothing to the targets after it.
+
 __`registerFullPath`__ - normally, helpers and partials are registered under their basename, rather than their path (e.g. partial at `partials/deep/awesomePartial.handlebars` is registered as `{{> awesomePartial}}`). When set to `true`, helpers and partials are registered under their full paths (e.g. {{> partials/deep/awesomePartial}}), to prevent clobbering after resolving globbed values.
 
 `handlebars` - a string representing the path to an instance of handlebars (if you don't want to use the bundeled version).
@@ -236,7 +238,7 @@ the output would be `./foo/bar.html` and `./foo/baz.html`
 I had to work with several hundred repeated data structures that never changed. Keeping them all in html was silly, but pushing out a template engine for the end user to compile the same information multiple times was even sillier. This allows you to have your templated cake and eat it too.
 
 ## Release History
- * 2.1.0 - Otis - @mikemellor11 fixed globbed `templateData` matching when templates and data live in separate trees, @thejsj added support for `templateData` as a function, @paintedbicycle's parent/child pages are now supported via the new `iterate` option, modernized the test setup
+ * 2.1.0 - Otis - @mikemellor11 fixed globbed `templateData` matching when templates and data live in separate trees, @thejsj added support for `templateData` as a function, @paintedbicycle's parent/child pages are now supported via the new `iterate` option, the new `isolated` option keeps a target's partials and helpers to itself, modernized the test setup
  * 2.0.4 - Bandit - @maxcarriere added support for passing options through to handlebars compile
  * 2.0.3 - Duke - version bump lodash
  * 2.0.2 - Gadge - fixup Grunt PeerDeps requirement for 1.0 compatibility, have templateData return an empty object when omitted
