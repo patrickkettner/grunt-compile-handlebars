@@ -152,6 +152,33 @@ module.exports = function(grunt) {
           }
         ]
       },
+      cwdWithoutTrailingSlash: {
+        files: [{
+            expand: true,
+            cwd: 'test/fixtures/deep',
+            src: '*.handlebars',
+            dest: 'tmp/cwdWithoutTrailingSlash/',
+            ext: '.html'
+        }],
+        templateData: 'test/fixtures/deep/*.json'
+      },
+      cwdWithDotSlash: {
+        files: [{
+            expand: true,
+            cwd: './test/fixtures/deep/',
+            src: '*.handlebars',
+            dest: 'tmp/cwdWithDotSlash/',
+            ext: '.html'
+        }],
+        templateData: 'test/fixtures/deep/*.json'
+      },
+      nonGlobSrcGlobbedData: {
+        files: [{
+          src: 'test/fixtures/template.handlebars',
+          dest: 'tmp/nonGlobSrcGlobbedData.html'
+        }],
+        templateData: 'test/fixtures/*.json'
+      },
       registerFullPath: {
         files: [{
             src: '<h1>{{salutation}}{{punctuation}} {{location}}</h1>{{> test/fixtures/deep/shared/pathTest}}',

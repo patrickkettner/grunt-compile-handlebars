@@ -43,6 +43,29 @@ exports.clean = {
 
     test.done();
   },
+  cwdWithoutTrailingSlash: function(test) {
+    test.expect(2);
+
+    test.equal(grunt.file.read('tmp/cwdWithoutTrailingSlash/german.html'), grunt.file.read('test/expected/german.html'), 'cwd without a trailing slash should still match globbed templateData');
+    test.equal(grunt.file.read('tmp/cwdWithoutTrailingSlash/romanian.html'), grunt.file.read('test/expected/romanian.html'), 'cwd without a trailing slash should still match globbed templateData');
+
+    test.done();
+  },
+  cwdWithDotSlash: function(test) {
+    test.expect(2);
+
+    test.equal(grunt.file.read('tmp/cwdWithDotSlash/german.html'), grunt.file.read('test/expected/german.html'), 'cwd with a leading ./ should still match globbed templateData');
+    test.equal(grunt.file.read('tmp/cwdWithDotSlash/romanian.html'), grunt.file.read('test/expected/romanian.html'), 'cwd with a leading ./ should still match globbed templateData');
+
+    test.done();
+  },
+  nonGlobSrcGlobbedData: function(test) {
+    test.expect(1);
+
+    test.equal(grunt.file.read('tmp/nonGlobSrcGlobbedData.html'), grunt.file.read('test/expected/nonGlobSrcGlobbedData.html'), 'non-glob src with globbed templateData should fall back to extension swapping');
+
+    test.done();
+  },
   dynamicTemplateData: function(test) {
     test.expect(1);
 
