@@ -66,6 +66,16 @@ exports.clean = {
 
     test.done();
   },
+  templateDataFunction: function(test) {
+    test.expect(1);
+
+    var actual   = grunt.file.read('tmp/templateDataFunction.html');
+    var expected = grunt.file.read('test/expected/templateDataFunction.html');
+
+    test.equal(actual, expected, 'templateData as a function should work');
+
+    test.done();
+  },
   dynamicTemplateData: function(test) {
     test.expect(1);
 

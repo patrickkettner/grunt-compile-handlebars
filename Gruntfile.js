@@ -62,6 +62,19 @@ module.exports = function(grunt) {
         template: '<h1>{{salutation}}{{punctuation}} {{location}}</h1>',
         templateData: 'test/fixtures/data.json'
       },
+      templateDataFunction: {
+        files: [{
+          src: 'test/fixtures/template.handlebars',
+          dest: 'tmp/templateDataFunction.html'
+        }],
+        templateData: function() {
+          return {
+            "salutation": "Hallo",
+            "punctuation": ",",
+            "location": "Welt"
+          };
+        }
+      },
       dynamicTemplateData: {
         files: [{
           src: 'test/fixtures/template.handlebars',
