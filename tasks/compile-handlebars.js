@@ -86,7 +86,7 @@ module.exports = function(grunt) {
   };
 
   var mergeJson = function(source, globals) {
-    var json = {}
+    var json = {};
     var fragment;
 
     globals.forEach(function(global) {
