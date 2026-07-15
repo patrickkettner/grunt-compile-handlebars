@@ -212,6 +212,46 @@ module.exports = function(grunt) {
         }],
         templateData: 'test/fixtures/deep/**/*.json'
       },
+      parentWithChild: {
+        files: [{
+          src: 'test/fixtures/blog.html',
+          dest: 'tmp/blog.html'
+        }],
+        templateData: 'test/globals/blog.json'
+      },
+      parentWithChildChildren: {
+        files: [{
+          src: 'test/fixtures/blog-post.html',
+          dest: 'tmp/blog/blog-{{key}}.html'
+        }],
+        templateData: 'test/globals/blog.json',
+        iterate: 'posts'
+      },
+      iterateArray: {
+        files: [{
+          src: '<li>{{name}}</li>',
+          dest: 'tmp/iterateArray/item-{{key}}.html'
+        }],
+        templateData: {
+          items: [
+            { "name": "first" },
+            { "name": "second" }
+          ]
+        },
+        iterate: 'items'
+      },
+      iterateGlobals: {
+        files: [{
+          src: '<p>{{siteTitle}}|{{fromGlobal}}|{{title}}</p>',
+          dest: 'tmp/iterateGlobals/{{key}}.html'
+        }],
+        templateData: 'test/globals/blog.json',
+        iterate: 'posts',
+        globals: [{
+          fromGlobal: 'from the globals',
+          siteTitle: 'the globals should not win'
+        }]
+      },
       oneTemplateToManyOutputs: {
         files: [{
           src: 'test/fixtures/template.handlebars',

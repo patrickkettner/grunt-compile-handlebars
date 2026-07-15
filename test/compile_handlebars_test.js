@@ -197,16 +197,34 @@ exports.clean = {
     test.done();
   },
   parentWithChild: function(test) {
-    test.expect(2);
+    test.expect(6);
 
     var parentActual   = grunt.file.read('tmp/blog.html');
     var parentExpected = grunt.file.read('test/expected/blog.html');
-    var childActual   = grunt.file.read('tmp/blog/blog-post1.html');
-    var childExpected = grunt.file.read('test/expected/blog/blog-post1.html');
 
     test.equal(parentActual, parentExpected, 'Parent file should contain both parent and child content.');
 
-    test.equal(childActual, childExpected, 'Child pages should work.');
+    ['post1', 'post2', 'post3', 'post4', 'post5'].forEach(function(post) {
+      var childActual   = grunt.file.read('tmp/blog/blog-' + post + '.html');
+      var childExpected = grunt.file.read('test/expected/blog/blog-' + post + '.html');
+
+      test.equal(childActual, childExpected, 'Child pages should work.');
+    });
+
+    test.done();
+  },
+  iterateArray: function(test) {
+    test.expect(2);
+
+    test.equal(grunt.file.read('tmp/iterateArray/item-0.html'), '<li>first</li>', 'Array entries should iterate with their index as the key.');
+    test.equal(grunt.file.read('tmp/iterateArray/item-1.html'), '<li>second</li>', 'Array entries should iterate with their index as the key.');
+
+    test.done();
+  },
+  iterateGlobals: function(test) {
+    test.expect(1);
+
+    test.equal(grunt.file.read('tmp/iterateGlobals/post1.html'), '<p>My Personal Blog|from the globals|Blog Post 1</p>', 'Iterated entries should see globals, with the templateData winning collisions.');
 
     test.done();
   },

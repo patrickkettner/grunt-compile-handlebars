@@ -300,7 +300,72 @@ module.exports = function(grunt) {
 
     };
 
+
+    // Compiles one template once per entry of the object or array that
+    // `iterate` points to inside the templateData, writing each render to a
+    // dest resolved as a handlebars template of the entry (plus its `key`)
+    var compileIterated = function(file) {
+      if (file.src && file.src.length > 1) {
+        grunt.log.error('`iterate` only supports a single source template per files entry.');
+        return;
+      }
+      if (Array.isArray(config.templateData)) {
+        grunt.log.error('`iterate` does not support array templateData.');
+        return;
+      }
+
+      var template = (file.src && file.src.length) ? file.src[0] : file.orig.src[0];
+      var compiledTemplate = handlebars.compile(parseData(template, true), options);
+      // filenames are not HTML, so do not escape the interpolated values
+      var compiledDest = handlebars.compile(file.dest || file.orig.dest, { noEscape: true });
+      var templateData = parseData(getTemplateData(config.templateData, template, 0, file));
+      var entries = templateData;
+
+      config.iterate.split('.').forEach(function(key) {
+        entries = (entries || {})[key];
+      });
+
+      if (grunt.util.kindOf(entries) !== 'object' && grunt.util.kindOf(entries) !== 'array') {
+        grunt.log.error('`iterate` ("' + config.iterate + '") does not resolve to an object or array in the templateData');
+        return;
+      }
+
+      // each entry renders with the full templateData (and any globals,
+      // which the templateData wins over, as usual) as its base context,
+      // with the entry's own fields merged on top
+      var base = mergeJson(templateData, config.globals || []);
+      var preHTML = config.preHTML ? parseData(config.preHTML) : '';
+      var postHTML = config.postHTML ? parseData(config.postHTML) : '';
+      var writtenPaths = {};
+
+      Object.keys(entries).forEach(function(key) {
+        var json = _merge({}, base, entries[key]);
+        var outputPath = compiledDest(_merge({}, json, { key: key }));
+        var html = preHTML + compiledTemplate(json) + postHTML;
+
+        if (writtenPaths[outputPath]) {
+          grunt.log.error('`iterate` rendered "' + outputPath + '" more than once. Does your dest include {{key}}?');
+        }
+        writtenPaths[outputPath] = true;
+
+        grunt.file.mkdir(path.dirname(outputPath));
+
+        try {
+          fs.writeFileSync(outputPath, html);
+          grunt.verbose.ok();
+        } catch (e) {
+          grunt.verbose.error();
+          throw grunt.util.error('Unable to write "' + outputPath + '" file (Error code: ' + e.code + ').', e);
+        }
+      });
+    };
+
     files.forEach(function(file) {
+      if (config.iterate) {
+        compileIterated(file);
+        return;
+      }
+
       if (Array.isArray(file.dest) && file.dest.length > file.src.length) {
         if (file.src.length > 1) {
           grunt.log.error('You may only have one source file when there are more destination files than source files.');
