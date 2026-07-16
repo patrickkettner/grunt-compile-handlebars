@@ -238,6 +238,7 @@ the output would be `./foo/bar.html` and `./foo/baz.html`
 I had to work with several hundred repeated data structures that never changed. Keeping them all in html was silly, but pushing out a template engine for the end user to compile the same information multiple times was even sillier. This allows you to have your templated cake and eat it too.
 
 ## Release History
+ * 2.1.1 - Chas - replace the long-dead jshint and nodeunit dev dependency trees with eslint and a plain assert runner, `npm install` is finally silent again
  * 2.1.0 - Royal - @mikemellor11 fixed globbed `templateData` matching when templates and data live in separate trees, @thejsj added support for `templateData` as a function, @paintedbicycle's parent/child pages are now supported via the new `iterate` option, the new `isolated` option keeps a target's partials and helpers to itself, modernized the test setup
  * 2.0.4 - Max - @maxcarriere added support for passing options through to handlebars compile
  * 2.0.3 - Duke - version bump lodash
