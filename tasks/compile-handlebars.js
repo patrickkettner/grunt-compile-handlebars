@@ -59,7 +59,7 @@ module.exports = function(grunt) {
       return;
     }
 
-    var match = filename.match(/[^\*]*/);
+    var match = filename.match(/[^*]*/);
 
     if (match[0] !== filename) {
       return match.pop();

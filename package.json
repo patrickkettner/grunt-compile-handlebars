@@ -30,10 +30,11 @@
     "test": "grunt test"
   },
   "devDependencies": {
+    "@eslint/js": "^9.39.5",
+    "eslint": "^9.39.5",
+    "globals": "^17.7.0",
     "grunt": "^1.6.2",
-    "grunt-contrib-clean": "^2.0.1",
-    "grunt-contrib-jshint": "^3.2.0",
-    "grunt-contrib-nodeunit": "^5.0.0"
+    "grunt-contrib-clean": "^2.0.1"
   },
   "peerDependencies": {
     "grunt": ">=0.4.0"
@@ -47,5 +48,10 @@
   "keywords": [
     "gruntplugin",
     "handlebars"
-  ]
+  ],
+  "overrides": {
+    "grunt": {
+      "js-yaml": "3.15.0"
+    }
+  }
 }

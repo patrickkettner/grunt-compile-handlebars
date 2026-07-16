@@ -13,17 +13,6 @@ module.exports = function(grunt) {
   // Project configuration.
   grunt.initConfig({
 
-    jshint: {
-      all: [
-        'Gruntfile.js',
-        'tasks/*.js',
-        '<%= nodeunit.tests %>'
-      ],
-      options: {
-        jshintrc: '.jshintrc'
-      }
-    },
-
     clean: {
       test: ['tmp']
     },
@@ -282,11 +271,6 @@ module.exports = function(grunt) {
         }],
         templateData: ['test/fixtures/oneTemplateToManyOutputs1.json', 'test/fixtures/oneTemplateToManyOutputs2.json']
       }
-    },
-
-    // Unit tests.
-    nodeunit: {
-      tests: ['test/*_test.js']
     }
   });
 
@@ -295,13 +279,103 @@ module.exports = function(grunt) {
 
   // These plugins provide necessary tasks.
   grunt.loadNpmTasks('grunt-contrib-clean');
-  grunt.loadNpmTasks('grunt-contrib-jshint');
-  grunt.loadNpmTasks('grunt-contrib-nodeunit');
+
+  // Lint everything with eslint (see eslint.config.js).
+  grunt.registerTask('lint', 'Lint the task, tests, and Gruntfile', function() {
+    var done = this.async();
+    var ESLint = require('eslint').ESLint;
+
+    new ESLint().lintFiles(['Gruntfile.js', 'eslint.config.js', 'tasks/*.js', 'test/*_test.js']).then(function(results) {
+      var problems = 0;
+
+      results.forEach(function(result) {
+        result.messages.forEach(function(message) {
+          problems++;
+          grunt.log.error(result.filePath + ':' + message.line + ' ' + message.message + ' (' + (message.ruleId || 'parse error') + ')');
+        });
+      });
+
+      done(problems === 0);
+    }, function(err) {
+      grunt.log.error(err.message);
+      done(false);
+    });
+  });
+
+  // Run the nodeunit-style suite in test/ against plain assert.
+  grunt.registerTask('run-tests', 'Run the test suite', function() {
+    var assert = require('assert');
+    var path = require('path');
+    var failures = [];
+    var assertions = 0;
+
+    var runTest = function(testName, fn) {
+      var expected;
+      var ran = 0;
+      var finished = false;
+      var test = {
+        expect: function(count) {
+          expected = count;
+        },
+        equal: function(actual, wanted, message) {
+          ran++;
+          assertions++;
+          try {
+            assert.equal(actual, wanted, message);
+          } catch (err) {
+            failures.push(testName + ': ' + err.message);
+          }
+        },
+        done: function() {
+          finished = true;
+          if (expected !== undefined && ran !== expected) {
+            failures.push(testName + ': expected ' + expected + ' assertions, but ' + ran + ' ran');
+          }
+        }
+      };
+
+      try {
+        fn(test);
+        if (!finished) {
+          failures.push(testName + ': never called test.done()');
+        }
+      } catch (err) {
+        failures.push(testName + ': ' + err.message);
+      }
+    };
+
+    grunt.file.expand('test/*_test.js').forEach(function(file) {
+      var suites = require(path.resolve(file));
+
+      Object.keys(suites).forEach(function(suiteName) {
+        var suite = suites[suiteName];
+
+        if (typeof suite === 'function') {
+          runTest(suiteName, suite);
+          return;
+        }
+
+        Object.keys(suite).forEach(function(testName) {
+          runTest(testName, suite[testName]);
+        });
+      });
+    });
+
+    failures.forEach(function(failure) {
+      grunt.log.error(failure);
+    });
+
+    if (failures.length) {
+      grunt.fail.warn(failures.length + ' test(s) failed');
+    }
+
+    grunt.log.ok(assertions + ' assertions passed');
+  });
 
   // Whenever the 'test' task is run, first create some files to be cleaned,
   // then run this plugin's task(s), then test the result.
-  grunt.registerTask('test', ['clean', 'compile-handlebars', 'nodeunit']);
+  grunt.registerTask('test', ['clean', 'compile-handlebars', 'run-tests']);
 
   // By default, lint and run all tests.
-  grunt.registerTask('default', ['jshint', 'test']);
+  grunt.registerTask('default', ['lint', 'test']);
 };
